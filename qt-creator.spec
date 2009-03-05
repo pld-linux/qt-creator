@@ -1,0 +1,66 @@
+#
+
+Summary:	An IDE tailored to the needs of Qt developers
+Summary(pl.UTF-8):	IDE dostosowane do potrzeb developerow Qt
+Name:		qt-creator
+Version:	1.0.0
+Release:	1
+Epoch:		1
+License:	LGPL v2.1
+Group:		Libraries
+Source0:	http://download.qtsoftware.com/qtcreator/%{name}-%{version}-src.zip
+# Source0-md5:	5478124035d80a90e66a3db67ab4477a
+URL:		http://www.qtsoftware.com/developer/qt-creator
+BuildRequires:	libstdc++-devel
+BuildRequires:	qt4-qmake >= 4.5.0-3
+BuildRequires:	QtSql-sqlite
+BuildRequires:	QtGui-devel
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%description
+Qt Creator is a cross-platform integrated development environment (IDE) 
+tailored to the needs of Qt developers.
+
+%description -l pl.UTF-8
+Qt Creator to wieloplatformowe IDE dostosowane do potrzeb developerow Qt.
+
+%prep
+%setup -q -n %{name}-%{version}-src
+
+%build
+export QTDIR=%{_libdir}/qt4
+# the qmakespec in qt4 is somewhat broken, need to look at this
+#export QMAKESPEC=%{_datadir}/qt4/mkspecs/linux-g++/
+
+qmake-qt4 qtcreator.pro \
+	QMAKE_CXX="%{__cxx}" \
+	QMAKE_LINK="%{__cxx}" \
+	QMAKE_CXXFLAGS_RELEASE="%{rpmcflags}" \
+	QMAKE_RPATH=	
+
+%{__make}
+
+%install
+rm -rf $RPM_BUILD_ROOT
+
+export QTDIR=%{_libdir}/qt4
+#export QMAKESPEC=%{_datadir}/qt4/mkspecs/linux-g++/
+%{__make} install \
+	INSTALL_ROOT=$RPM_BUILD_ROOT/%{_prefix}
+
+mv -f $RPM_BUILD_ROOT/{%{_prefix}/lib,%{_libdir}}
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/*
+%dir %{_libdir}/qtcreator
+%attr(755,root,root) %{_libdir}/qtcreator/lib*.so*
+%dir %{_libdir}/qtcreator/plugins
+%dir %{_libdir}/qtcreator/plugins/Nokia
+%{_libdir}/qtcreator/plugins/Nokia/*.pluginspec                                                                                    
+%attr(755,root,root) %{_libdir}/qtcreator/plugins/Nokia/*.so
+%{_datadir}/qtcreator
+%{_pixmapsdir}/qtcreator_logo*.png
