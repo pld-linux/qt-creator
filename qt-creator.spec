@@ -12,10 +12,18 @@ Source0:	http://download.qtsoftware.com/qtcreator/%{name}-%{version}-src.zip
 # Source0-md5:	5478124035d80a90e66a3db67ab4477a
 Patch0:		%{name}-pluginpath64.patch
 URL:		http://www.qtsoftware.com/developer/qt-creator
-BuildRequires:	libstdc++-devel
-BuildRequires:	qt4-qmake >= 4.5.0-3
-BuildRequires:	QtSql-sqlite
+BuildRequires:	QtDBus-devel
 BuildRequires:	QtGui-devel
+BuildRequires:	QtHelp-devel
+BuildRequires:	QtNetwork-devel
+BuildRequires:	QtScript-devel
+BuildRequires:	QtSql-sqlite
+BuildRequires:	QtSvg-devel
+BuildRequires:	QtWebKit-devel
+BuildRequires:	QtXml-devel
+BuildRequires:	qt4-build >= 4.5.0-3
+BuildRequires:	qt4-qmake >= 4.5.0-3
+BuildRequires:	unzip
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -70,7 +78,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/qtcreator/lib*.so
 %dir %{_libdir}/qtcreator/plugins
 %dir %{_libdir}/qtcreator/plugins/Nokia
-%{_libdir}/qtcreator/plugins/Nokia/*.pluginspec                                                                                    
+%{_libdir}/qtcreator/plugins/Nokia/*.pluginspec
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/Nokia/*.so
 %{_datadir}/qtcreator
 %{_defaultdocdir}/qtcreator
