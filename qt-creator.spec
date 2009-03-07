@@ -17,7 +17,7 @@ BuildRequires:	QtGui-devel
 BuildRequires:	QtHelp-devel
 BuildRequires:	QtNetwork-devel
 BuildRequires:	QtScript-devel
-BuildRequires:	QtSql-sqlite
+BuildRequires:	QtSql-sqlite3
 BuildRequires:	QtSvg-devel
 BuildRequires:	QtWebKit-devel
 BuildRequires:	QtXml-devel
@@ -57,11 +57,12 @@ qmake-qt4 qtcreator.pro \
 rm -rf $RPM_BUILD_ROOT
 
 export QTDIR=%{_libdir}/qt4
-#export QMAKESPEC=%{_datadir}/qt4/mkspecs/linux-g++/
 %{__make} install \
 	INSTALL_ROOT=$RPM_BUILD_ROOT/%{_prefix}
 
+%if "%{_lib}" == "lib64"
 mv -f $RPM_BUILD_ROOT/{%{_prefix}/lib,%{_libdir}}
+%endif
 
 install -d $RPM_BUILD_ROOT/%{_sysconfdir}/ld.so.conf.d
 echo "%{_libdir}/qtcreator" > $RPM_BUILD_ROOT/%{_sysconfdir}/ld.so.conf.d/qtcreator.conf
@@ -76,6 +77,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/qtcreator
 %attr(755,root,root) %{_libdir}/qtcreator/lib*.so.*.*
 %attr(755,root,root) %{_libdir}/qtcreator/lib*.so
+%attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.1
 %dir %{_libdir}/qtcreator/plugins
 %dir %{_libdir}/qtcreator/plugins/Nokia
 %{_libdir}/qtcreator/plugins/Nokia/*.pluginspec
