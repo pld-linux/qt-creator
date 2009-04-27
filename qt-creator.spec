@@ -13,6 +13,7 @@ Source0:	http://download.qtsoftware.com/qtcreator/%{name}-%{version}-src.zip
 Patch0:		%{name}-pluginpath64.patch
 URL:		http://www.qtsoftware.com/developer/qt-creator
 BuildRequires:	QtDBus-devel
+BuildRequires:	QtDesigner-devel
 BuildRequires:	QtGui-devel
 BuildRequires:	QtHelp-devel
 BuildRequires:	QtNetwork-devel
