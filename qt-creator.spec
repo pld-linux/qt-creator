@@ -23,8 +23,10 @@ BuildRequires:	QtSvg-devel
 BuildRequires:	QtWebKit-devel
 BuildRequires:	QtXml-devel
 BuildRequires:	qt4-build >= 4.5.0-3
+BuildRequires:	qt4-linguist
 BuildRequires:	qt4-qmake >= 4.5.0-3
 BuildRequires:	unzip
+%requires_eq	QtCore
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -65,6 +67,8 @@ export QTDIR=%{_libdir}/qt4
 mv -f $RPM_BUILD_ROOT/{%{_prefix}/lib,%{_libdir}}
 %endif
 
+mv -f $RPM_BUILD_ROOT/%{_bindir}/{qtcreator.bin,qtcreator}
+
 install -d $RPM_BUILD_ROOT/%{_sysconfdir}/ld.so.conf.d
 echo "%{_libdir}/qtcreator" > $RPM_BUILD_ROOT/%{_sysconfdir}/ld.so.conf.d/qtcreator.conf
 
@@ -73,7 +77,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_bindir}/qtcreator
+%attr(755,root,root) %{_bindir}/qtcreator_process_stub
 %{_sysconfdir}/ld.so.conf.d/qtcreator.conf
 %dir %{_libdir}/qtcreator
 %attr(755,root,root) %{_libdir}/qtcreator/lib*.so.*.*
