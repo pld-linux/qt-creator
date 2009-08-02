@@ -3,13 +3,13 @@
 Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb developerow Qt
 Name:		qt-creator
-Version:	1.2.0
+Version:	1.2.1
 Release:	1
 Epoch:		1
 License:	LGPL v2.1
 Group:		Libraries
 Source0:	http://download.qtsoftware.com/qtcreator/%{name}-%{version}-src.zip
-# Source0-md5:	87315f83e37dc92dfb5730282d5ecb56
+# Source0-md5:	41f044cf567db09153161403fbab4076
 Patch0:		%{name}-pluginpath64.patch
 URL:		http://www.qtsoftware.com/developer/qt-creator
 BuildRequires:	QtDBus-devel
