@@ -3,13 +3,13 @@
 Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb developerow Qt
 Name:		qt-creator
-Version:	1.2.1
+Version:	1.3.0
 Release:	1
 Epoch:		1
 License:	LGPL v2.1
 Group:		Libraries
 Source0:	http://download.qtsoftware.com/qtcreator/%{name}-%{version}-src.zip
-# Source0-md5:	41f044cf567db09153161403fbab4076
+# Source0-md5:	c4c0450099a76099917687f3f05604d9
 Patch0:		%{name}-pluginpath64.patch
 URL:		http://www.qtsoftware.com/developer/qt-creator
 BuildRequires:	QtDBus-devel
@@ -22,9 +22,9 @@ BuildRequires:	QtSql-sqlite3
 BuildRequires:	QtSvg-devel
 BuildRequires:	QtWebKit-devel
 BuildRequires:	QtXml-devel
-BuildRequires:	qt4-build >= 4.5.0-3
+BuildRequires:	qt4-build >= 4.6.0
 BuildRequires:	qt4-linguist
-BuildRequires:	qt4-qmake >= 4.5.0-3
+BuildRequires:	qt4-qmake >= 4.6.0
 BuildRequires:	unzip
 %requires_eq	QtCore
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -37,7 +37,7 @@ tailored to the needs of Qt developers.
 Qt Creator to wieloplatformowe IDE dostosowane do potrzeb developerow Qt.
 
 %prep
-%setup -q -n %{name}-%{version}-src
+%setup -q
 
 %if "%{_lib}" == "lib64"
 %patch0 -p1
@@ -61,16 +61,16 @@ rm -rf $RPM_BUILD_ROOT
 
 export QTDIR=%{_libdir}/qt4
 %{__make} install \
-	INSTALL_ROOT=$RPM_BUILD_ROOT/%{_prefix}
+	INSTALL_ROOT=$RPM_BUILD_ROOT%{_prefix}
 
 %if "%{_lib}" == "lib64"
-mv -f $RPM_BUILD_ROOT/{%{_prefix}/lib,%{_libdir}}
+mv -f $RPM_BUILD_ROOT{%{_prefix}/lib,%{_libdir}}
 %endif
 
-mv -f $RPM_BUILD_ROOT/%{_bindir}/{qtcreator.bin,qtcreator}
+mv -f $RPM_BUILD_ROOT%{_bindir}/{qtcreator.bin,qtcreator}
 
-install -d $RPM_BUILD_ROOT/%{_sysconfdir}/ld.so.conf.d
-echo "%{_libdir}/qtcreator" > $RPM_BUILD_ROOT/%{_sysconfdir}/ld.so.conf.d/qtcreator.conf
+install -d $RPM_BUILD_ROOT%{_sysconfdir}/ld.so.conf.d
+echo "%{_libdir}/qtcreator" > $RPM_BUILD_ROOT%{_sysconfdir}/ld.so.conf.d/qtcreator.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
