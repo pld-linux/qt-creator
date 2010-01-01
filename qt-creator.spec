@@ -27,6 +27,7 @@ BuildRequires:	qt4-qmake >= 4.6.0
 BuildRequires:	unzip
 Requires(post,postun):	desktop-file-utils
 %requires_eq	QtCore
+Requires:	QtSql-sqlite3
 # for xdg-open
 Suggests:	xdg-utils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
