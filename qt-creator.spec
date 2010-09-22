@@ -1,17 +1,18 @@
 Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb developerow Qt
 Name:		qt-creator
-Version:	1.3.1
-Release:	3
+Version:	2.0.1
+Release:	1
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
-Source0:	http://download.qtsoftware.com/qtcreator/%{name}-%{version}-src.zip
-# Source0-md5:	b4c66810c591f62aa26739f997ffe88b
+Source0:	http://get.qt.nokia.com/qtcreator/%{name}-%{version}-src.zip
+# Source0-md5:	7b670968ec80d2d413ff22605a31a77d
 Source1:	%{name}.desktop
 Patch0:		%{name}-pluginpath64.patch
 URL:		http://www.qtsoftware.com/developer/qt-creator
 BuildRequires:	QtDBus-devel
+BuildRequires:	QtDeclarative-devel
 BuildRequires:	QtDesigner-devel
 BuildRequires:	QtGui-devel
 BuildRequires:	QtHelp-devel
@@ -21,9 +22,9 @@ BuildRequires:	QtSql-sqlite3
 BuildRequires:	QtSvg-devel
 BuildRequires:	QtWebKit-devel
 BuildRequires:	QtXml-devel
-BuildRequires:	qt4-build >= 4.6.0
+BuildRequires:	qt4-build >= 4.7.0
 BuildRequires:	qt4-linguist
-BuildRequires:	qt4-qmake >= 4.6.0
+BuildRequires:	qt4-qmake >= 4.7.0
 BuildRequires:	unzip
 Requires(post,postun):	desktop-file-utils
 %requires_eq	QtCore
@@ -33,7 +34,7 @@ Suggests:	xdg-utils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Qt Creator is a cross-platform integrated development environment (IDE) 
+Qt Creator is a cross-platform integrated development environment (IDE)
 tailored to the needs of Qt developers.
 
 %description -l pl.UTF-8
@@ -55,7 +56,7 @@ qmake-qt4 qtcreator.pro \
 	QMAKE_CXX="%{__cxx}" \
 	QMAKE_LINK="%{__cxx}" \
 	QMAKE_CXXFLAGS_RELEASE="%{rpmcflags}" \
-	QMAKE_RPATH=	
+	QMAKE_RPATH=
 
 %{__make}
 
@@ -70,8 +71,6 @@ export QTDIR=%{_libdir}/qt4
 %if "%{_lib}" == "lib64"
 mv -f $RPM_BUILD_ROOT{%{_prefix}/lib,%{_libdir}}
 %endif
-
-mv -f $RPM_BUILD_ROOT%{_bindir}/{qtcreator.bin,qtcreator}
 
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/ld.so.conf.d
 echo "%{_libdir}/qtcreator" > $RPM_BUILD_ROOT%{_sysconfdir}/ld.so.conf.d/qtcreator.conf
