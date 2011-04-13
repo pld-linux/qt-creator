@@ -2,7 +2,7 @@ Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb developerow Qt
 Name:		qt-creator
 Version:	2.1.0
-Release:	1
+Release:	2
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
@@ -25,10 +25,12 @@ BuildRequires:	QtXml-devel
 BuildRequires:	qt4-build >= 4.7.0
 BuildRequires:	qt4-linguist
 BuildRequires:	qt4-qmake >= 4.7.0
+BuildRequires:	rpmbuild(macros) >= 1.602
 BuildRequires:	unzip
 Requires(post,postun):	desktop-file-utils
 %requires_eq	QtCore
 Requires:	QtSql-sqlite3
+Requires:	hicolor-icon-theme
 # for xdg-open
 Suggests:	xdg-utils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -77,16 +79,25 @@ echo "%{_libdir}/qtcreator" > $RPM_BUILD_ROOT%{_sysconfdir}/ld.so.conf.d/qtcreat
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}/%{name}.desktop
 
+for i in 16 24 32 48 64 128 256
+do
+	install -d $RPM_BUILD_ROOT%{_iconsdir}/hicolor/${i}x${i}/apps
+	ln -s ../../../../pixmaps/qtcreator_logo_${i}.png \
+		$RPM_BUILD_ROOT%{_iconsdir}/hicolor/${i}x${i}/apps/qtcreator.png
+done
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/ldconfig
 %update_desktop_database
+%update_icon_cache hicolor
 
 %postun
 /sbin/ldconfig
 %update_desktop_database_postun
+%update_icon_cache hicolor
 
 %files
 %defattr(644,root,root,755)
@@ -105,3 +116,4 @@ rm -rf $RPM_BUILD_ROOT
 %{_defaultdocdir}/qtcreator
 %{_desktopdir}/qt-creator.desktop
 %{_pixmapsdir}/qtcreator_logo*.png
+%{_iconsdir}/hicolor/*/*/*.png
