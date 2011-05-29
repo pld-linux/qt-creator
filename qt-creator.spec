@@ -10,7 +10,7 @@ Source0:	http://get.qt.nokia.com/qtcreator/%{name}-%{version}-src.zip
 # Source0-md5:	cc16de5357516c513d07a4a4fcdc533a
 Source1:	%{name}.desktop
 Patch0:		%{name}-pluginpath64.patch
-URL:		http://www.qtsoftware.com/developer/qt-creator
+URL:		http://qt.nokia.com/products/developer-tools
 BuildRequires:	QtDBus-devel
 BuildRequires:	QtDeclarative-devel
 BuildRequires:	QtDesigner-devel
