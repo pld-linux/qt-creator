@@ -1,13 +1,13 @@
 Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb developerow Qt
 Name:		qt-creator
-Version:	2.2.1
+Version:	2.3.0
 Release:	1
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
 Source0:	http://get.qt.nokia.com/qtcreator/%{name}-%{version}-src.zip
-# Source0-md5:	8a3165f7f68d4932c9a902452993099d
+# Source0-md5:	9d0ca1d39cb7f6d54d86d16ba1593b2f
 Source1:	%{name}.desktop
 Patch0:		%{name}-pluginpath64.patch
 URL:		http://qt.nokia.com/products/developer-tools
@@ -79,13 +79,6 @@ echo "%{_libdir}/qtcreator" > $RPM_BUILD_ROOT%{_sysconfdir}/ld.so.conf.d/qtcreat
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}/%{name}.desktop
 
-for i in 16 24 32 48 64 128 256
-do
-	install -d $RPM_BUILD_ROOT%{_iconsdir}/hicolor/${i}x${i}/apps
-	ln -s ../../../../pixmaps/qtcreator_logo_${i}.png \
-		$RPM_BUILD_ROOT%{_iconsdir}/hicolor/${i}x${i}/apps/qtcreator.png
-done
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -113,8 +106,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/qtcreator/plugins/Nokia
 %{_libdir}/qtcreator/plugins/Nokia/*.pluginspec
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/Nokia/*.so
+%{_libdir}/qtcreator/qtcomponents
 %{_datadir}/qtcreator
 %{_defaultdocdir}/qtcreator
 %{_desktopdir}/qt-creator.desktop
-%{_pixmapsdir}/qtcreator_logo*.png
 %{_iconsdir}/hicolor/*/*/*.png
