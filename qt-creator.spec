@@ -2,7 +2,7 @@ Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb developerow Qt
 Name:		qt-creator
 Version:	2.3.0
-Release:	1
+Release:	2
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
@@ -78,6 +78,9 @@ install -d $RPM_BUILD_ROOT%{_sysconfdir}/ld.so.conf.d
 echo "%{_libdir}/qtcreator" > $RPM_BUILD_ROOT%{_sysconfdir}/ld.so.conf.d/qtcreator.conf
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}/%{name}.desktop
+
+# not supported by hicolor-icon-theme
+rm -rf $RPM_BUILD_ROOT%{_iconsdir}/hicolor/512x512
 
 %clean
 rm -rf $RPM_BUILD_ROOT
