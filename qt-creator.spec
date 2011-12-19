@@ -1,13 +1,13 @@
 Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb developerow Qt
 Name:		qt-creator
-Version:	2.3.1
+Version:	2.4.0
 Release:	1
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
 Source0:	http://get.qt.nokia.com/qtcreator/%{name}-%{version}-src.zip
-# Source0-md5:	53b64d6be1639dbab52c85cc76c83b06
+# Source0-md5:	ae9dca75b941bcff3833ea3fa26d8b4e
 Source1:	%{name}.desktop
 Patch0:		%{name}-pluginpath64.patch
 URL:		http://qt.nokia.com/products/developer-tools
@@ -111,6 +111,5 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/Nokia/*.so
 %{_libdir}/qtcreator/qtcomponents
 %{_datadir}/qtcreator
-%{_defaultdocdir}/qtcreator
 %{_desktopdir}/qt-creator.desktop
 %{_iconsdir}/hicolor/*/*/*.png
