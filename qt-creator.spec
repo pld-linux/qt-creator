@@ -1,16 +1,16 @@
 Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb developerow Qt
 Name:		qt-creator
-Version:	2.5.2
-Release:	2
+Version:	2.6.0
+Release:	1
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
-Source0:	http://get.qt.nokia.com/qtcreator/%{name}-%{version}-src.zip
-# Source0-md5:	26fe8d7980f53ca07fdd1c959f4866d4
+Source0:	http://releases.qt-project.org/qtcreator/2.6.0/%{name}-%{version}-src.tar.gz
+# Source0-md5:	9bf01098f84a0fe930b2718d11124204
 Source1:	%{name}.desktop
 Patch0:		%{name}-pluginpath64.patch
-URL:		http://qt.nokia.com/products/developer-tools
+URL:		http://qt.digia.com/Product/Developer-Tools
 BuildRequires:	QtDBus-devel
 BuildRequires:	QtDeclarative-devel
 BuildRequires:	QtDesigner-devel
@@ -22,11 +22,10 @@ BuildRequires:	QtSql-sqlite3
 BuildRequires:	QtSvg-devel
 BuildRequires:	QtWebKit-devel
 BuildRequires:	QtXml-devel
-BuildRequires:	qt4-build >= 4.7.4
+BuildRequires:	qt4-build >= 4.8.0
 BuildRequires:	qt4-linguist
-BuildRequires:	qt4-qmake >= 4.7.4
+BuildRequires:	qt4-qmake >= 4.8.0
 BuildRequires:	rpmbuild(macros) >= 1.602
-BuildRequires:	unzip
 Requires(post,postun):	desktop-file-utils
 %requires_eq	QtCore
 Requires:	QtSql-sqlite3
@@ -48,6 +47,9 @@ Qt Creator to wieloplatformowe IDE dostosowane do potrzeb developerow Qt.
 %if "%{_lib}" == "lib64"
 %patch0 -p1
 %endif
+
+# fix unresolved symbols in libQtcSsh
+echo "LIBS += -ldl" > src/libs/ssh/ssh_dependencies.pri
 
 %build
 export QTDIR=%{_libdir}/qt4
@@ -99,17 +101,20 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/qtcreator
 %attr(755,root,root) %{_bindir}/qtcreator_process_stub
-%attr(755,root,root) %{_bindir}/qmlprofiler
 %attr(755,root,root) %{_bindir}/qtpromaker
+%attr(755,root,root) %{_bindir}/sdktool
 %{_sysconfdir}/ld.so.conf.d/qtcreator.conf
 %dir %{_libdir}/qtcreator
 %attr(755,root,root) %{_libdir}/qtcreator/lib*.so.*.*
 %attr(755,root,root) %{_libdir}/qtcreator/lib*.so
 %attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.1
 %dir %{_libdir}/qtcreator/plugins
-%dir %{_libdir}/qtcreator/plugins/Nokia
-%{_libdir}/qtcreator/plugins/Nokia/*.pluginspec
-%attr(755,root,root) %{_libdir}/qtcreator/plugins/Nokia/*.so
+%dir %{_libdir}/qtcreator/plugins/QtProject
+%dir %{_libdir}/qtcreator/plugins/RIM
+%{_libdir}/qtcreator/plugins/QtProject/*.pluginspec
+%{_libdir}/qtcreator/plugins/RIM/*.pluginspec
+%attr(755,root,root) %{_libdir}/qtcreator/plugins/QtProject/*.so
+%attr(755,root,root) %{_libdir}/qtcreator/plugins/RIM/*.so
 %{_libdir}/qtcreator/qtcomponents
 %{_datadir}/qtcreator
 %{_desktopdir}/qt-creator.desktop
