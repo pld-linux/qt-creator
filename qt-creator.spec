@@ -1,13 +1,13 @@
 Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb developerow Qt
 Name:		qt-creator
-Version:	2.6.1
+Version:	2.7.0
 Release:	1
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
-Source0:	http://releases.qt-project.org/qtcreator/2.6.1/%{name}-%{version}-src.tar.gz
-# Source0-md5:	e4d6373335a80ddf7ffcacf92442e43c
+Source0:	http://releases.qt-project.org/qtcreator/2.7.0/%{name}-%{version}-src.tar.gz
+# Source0-md5:	7bf25d211ff8babea47c2034f1b93d08
 Source1:	%{name}.desktop
 Patch0:		%{name}-pluginpath64.patch
 URL:		http://qt.digia.com/Product/Developer-Tools
@@ -109,12 +109,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/qtcreator/lib*.so
 %attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.1
 %dir %{_libdir}/qtcreator/plugins
+%dir %{_libdir}/qtcreator/plugins/BlackBerry
 %dir %{_libdir}/qtcreator/plugins/QtProject
-%dir %{_libdir}/qtcreator/plugins/RIM
+%{_libdir}/qtcreator/plugins/BlackBerry/*.pluginspec
 %{_libdir}/qtcreator/plugins/QtProject/*.pluginspec
-%{_libdir}/qtcreator/plugins/RIM/*.pluginspec
+%attr(755,root,root) %{_libdir}/qtcreator/plugins/BlackBerry/*.so
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/QtProject/*.so
-%attr(755,root,root) %{_libdir}/qtcreator/plugins/RIM/*.so
 %{_libdir}/qtcreator/qtcomponents
 %{_datadir}/qtcreator
 %{_desktopdir}/qt-creator.desktop
