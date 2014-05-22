@@ -1,13 +1,13 @@
 Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb developerow Qt
 Name:		qt-creator
-Version:	2.7.0
+Version:	2.7.2
 Release:	1
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
-Source0:	http://releases.qt-project.org/qtcreator/2.7.0/%{name}-%{version}-src.tar.gz
-# Source0-md5:	7bf25d211ff8babea47c2034f1b93d08
+Source0:	http://download.qt-project.org/official_releases/qtcreator/2.7/%{version}/%{name}-%{version}-src.tar.gz
+# Source0-md5:	7f1c10740784d3edf2347c27be21fd1a
 Source1:	%{name}.desktop
 Patch0:		%{name}-pluginpath64.patch
 URL:		http://qt.digia.com/Product/Developer-Tools
