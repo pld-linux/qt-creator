@@ -11,20 +11,20 @@ Source0:	http://download.qt-project.org/official_releases/qtcreator/2.7/%{versio
 Source1:	%{name}.desktop
 Patch0:		%{name}-pluginpath64.patch
 URL:		http://qt.digia.com/Product/Developer-Tools
-BuildRequires:	QtDBus-devel
 BuildRequires:	QtDeclarative-devel
 BuildRequires:	QtDesigner-devel
 BuildRequires:	QtGui-devel
 BuildRequires:	QtHelp-devel
 BuildRequires:	QtNetwork-devel
 BuildRequires:	QtScript-devel
-BuildRequires:	QtSql-sqlite3
 BuildRequires:	QtSvg-devel
 BuildRequires:	QtWebKit-devel
 BuildRequires:	QtXml-devel
+BuildRequires:	gdb
 BuildRequires:	qt4-build >= 4.8.0
 BuildRequires:	qt4-linguist
 BuildRequires:	qt4-qmake >= 4.8.0
+BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.602
 Requires(post,postun):	desktop-file-utils
 %requires_eq	QtCore
@@ -35,11 +35,12 @@ Suggests:	xdg-utils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Qt Creator is a cross-platform integrated development environment (IDE)
-tailored to the needs of Qt developers.
+Qt Creator is a cross-platform integrated development environment
+(IDE) tailored to the needs of Qt developers.
 
 %description -l pl.UTF-8
-Qt Creator to wieloplatformowe IDE dostosowane do potrzeb developerow Qt.
+Qt Creator to wieloplatformowe IDE dostosowane do potrzeb developerow
+Qt.
 
 %prep
 %setup -q -n %{name}-%{version}-src
