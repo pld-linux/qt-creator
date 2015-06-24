@@ -53,11 +53,11 @@ Qt.
 echo "LIBS += -ldl" > src/libs/ssh/ssh_dependencies.pri
 
 %build
-export QTDIR=%{_libdir}/qt4
+export QTDIR=%{_libdir}/qt5
 # the qmakespec in qt4 is somewhat broken, need to look at this
 #export QMAKESPEC=%{_datadir}/qt4/mkspecs/linux-g++/
 
-qmake-qt4 qtcreator.pro \
+qmake-qt5 qtcreator.pro \
 	QMAKE_CXX="%{__cxx}" \
 	QMAKE_LINK="%{__cxx}" \
 	QMAKE_CXXFLAGS_RELEASE="%{rpmcflags}" \
@@ -69,7 +69,7 @@ qmake-qt4 qtcreator.pro \
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_desktopdir}
 
-export QTDIR=%{_libdir}/qt4
+export QTDIR=%{_libdir}/qt5
 %{__make} install \
 	INSTALL_ROOT=$RPM_BUILD_ROOT%{_prefix}
 
