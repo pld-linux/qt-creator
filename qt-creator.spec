@@ -11,24 +11,24 @@ Source0:	http://download.qt-project.org/official_releases/qtcreator/3.4/%{versio
 Source1:	%{name}.desktop
 Patch0:		%{name}-pluginpath64.patch
 URL:		http://qt.digia.com/Product/Developer-Tools
-BuildRequires:	QtDeclarative-devel
-BuildRequires:	QtDesigner-devel
-BuildRequires:	QtGui-devel
-BuildRequires:	QtHelp-devel
-BuildRequires:	QtNetwork-devel
-BuildRequires:	QtScript-devel
-BuildRequires:	QtSvg-devel
-BuildRequires:	QtWebKit-devel
-BuildRequires:	QtXml-devel
+BuildRequires:	Qt5Declarative-devel >= 5.3.1
+BuildRequires:	Qt5Designer-devel >= 5.3.1
+BuildRequires:	Qt5Gui-devel >= 5.3.1
+BuildRequires:	Qt5Help-devel >= 5.3.1
+BuildRequires:	Qt5Network-devel >= 5.3.1
+BuildRequires:	Qt5Script-devel >= 5.3.1
+BuildRequires:	Qt5Svg-devel >= 5.3.1
+BuildRequires:	Qt5WebKit-devel >= 5.3.1
+BuildRequires:	Qt5Xml-devel >= 5.3.1
 BuildRequires:	gdb
-BuildRequires:	qt4-build >= 4.8.0
-BuildRequires:	qt4-linguist
-BuildRequires:	qt4-qmake >= 4.8.0
+BuildRequires:	qt5-build >= 5.3.1
+BuildRequires:	qt5-linguist
+BuildRequires:	qt5-qmake >= 5.3.1
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.602
 Requires(post,postun):	desktop-file-utils
-%requires_eq	QtCore
-Requires:	QtSql-sqlite3
+%requires_eq	Qt5Core
+Requires:	Qt5Sql
 Requires:	hicolor-icon-theme
 # for xdg-open
 Suggests:	xdg-utils
