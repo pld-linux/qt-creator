@@ -10,7 +10,9 @@ Source0:	http://download.qt-project.org/official_releases/qtcreator/3.4/%{versio
 # Source0-md5:	bcbae4a567c93158babe3b7f42d01219
 Source1:	%{name}.desktop
 Patch0:		%{name}-pluginpath64.patch
+Patch1:		%{name}-pluginpathx32.patch
 URL:		http://qt.digia.com/Product/Developer-Tools
+BuildRequires:	Qt5Concurrent-devel >= 5.3.1
 BuildRequires:	Qt5Declarative-devel >= 5.3.1
 BuildRequires:	Qt5Designer-devel >= 5.3.1
 BuildRequires:	Qt5Gui-devel >= 5.3.1
@@ -48,9 +50,13 @@ Qt.
 %if "%{_lib}" == "lib64"
 %patch0 -p1
 %endif
+%if "%{_lib}" == "libx32"
+%patch1 -p1
+%endif
 
 # fix unresolved symbols in libQtcSsh
-echo "LIBS += -ldl" > src/libs/ssh/ssh_dependencies.pri
+echo >> src/libs/ssh/ssh_dependencies.pri
+echo "LIBS += -ldl" >> src/libs/ssh/ssh_dependencies.pri
 
 %build
 export QTDIR=%{_libdir}/qt5
@@ -73,14 +79,14 @@ export QTDIR=%{_libdir}/qt5
 %{__make} install \
 	INSTALL_ROOT=$RPM_BUILD_ROOT%{_prefix}
 
-%if "%{_lib}" == "lib64"
+%if "%{_lib}" != "lib"
 mv -f $RPM_BUILD_ROOT{%{_prefix}/lib,%{_libdir}}
 %endif
 
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/ld.so.conf.d
 echo "%{_libdir}/qtcreator" > $RPM_BUILD_ROOT%{_sysconfdir}/ld.so.conf.d/qtcreator.conf
 
-install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}/%{name}.desktop
+cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}/%{name}.desktop
 
 # not supported by hicolor-icon-theme
 rm -rf $RPM_BUILD_ROOT%{_iconsdir}/hicolor/512x512
@@ -100,6 +106,16 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/buildoutputparser
+%attr(755,root,root) %{_bindir}/qbs
+%attr(755,root,root) %{_bindir}/qbs-config
+%attr(755,root,root) %{_bindir}/qbs-config-ui
+%attr(755,root,root) %{_bindir}/qbs-qmltypes
+%attr(755,root,root) %{_bindir}/qbs-setup-android
+%attr(755,root,root) %{_bindir}/qbs-setup-qt
+%attr(755,root,root) %{_bindir}/qbs-setup-toolchains
+%attr(755,root,root) %{_bindir}/qml2puppet
+%attr(755,root,root) %{_bindir}/qmlpuppet
 %attr(755,root,root) %{_bindir}/qtcreator
 %attr(755,root,root) %{_bindir}/qtcreator_process_stub
 %attr(755,root,root) %{_bindir}/qtpromaker
@@ -110,13 +126,14 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/qtcreator/lib*.so
 %attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.1
 %dir %{_libdir}/qtcreator/plugins
-%dir %{_libdir}/qtcreator/plugins/BlackBerry
-%dir %{_libdir}/qtcreator/plugins/QtProject
-%{_libdir}/qtcreator/plugins/BlackBerry/*.pluginspec
-%{_libdir}/qtcreator/plugins/QtProject/*.pluginspec
-%attr(755,root,root) %{_libdir}/qtcreator/plugins/BlackBerry/*.so
-%attr(755,root,root) %{_libdir}/qtcreator/plugins/QtProject/*.so
-%{_libdir}/qtcreator/qtcomponents
+%attr(755,root,root) %{_libdir}/qtcreator/plugins/lib*.so
+%dir %{_libdir}/qtcreator/plugins/qbs
+%dir %{_libdir}/qtcreator/plugins/qbs/plugins
+%attr(755,root,root) %{_libdir}/qtcreator/plugins/qbs/plugins/libqbs_cpp_scanner.so
+%attr(755,root,root) %{_libdir}/qtcreator/plugins/qbs/plugins/libqbs_qt_scanner.so
+%dir %{_libdir}/qtcreator/plugins/qmldesigner
+%attr(755,root,root) %{_libdir}/qtcreator/plugins/qmldesigner/libcomponentsplugin.so
+%attr(755,root,root) %{_libdir}/qtcreator/plugins/qmldesigner/libqtquickplugin.so
 %{_datadir}/qtcreator
 %{_desktopdir}/qt-creator.desktop
 %{_iconsdir}/hicolor/*/*/*.png
