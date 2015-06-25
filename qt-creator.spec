@@ -23,6 +23,7 @@ BuildRequires:	Qt5Svg-devel >= 5.3.1
 BuildRequires:	Qt5WebKit-devel >= 5.3.1
 BuildRequires:	Qt5Xml-devel >= 5.3.1
 BuildRequires:	gdb
+BuildRequires:	libstdc++-devel
 BuildRequires:	qt5-build >= 5.3.1
 BuildRequires:	qt5-linguist
 BuildRequires:	qt5-qmake >= 5.3.1
