@@ -1,13 +1,13 @@
 Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb developerow Qt
 Name:		qt-creator
-Version:	3.6.0
+Version:	3.6.1
 Release:	1
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
 Source0:	http://download.qt.io/official_releases/qtcreator/3.6/%{version}/%{name}-opensource-src-%{version}.tar.gz
-# Source0-md5:	6b0052a6d671318fca540a190cacd97d
+# Source0-md5:	3b6631cf6ff00bb2a2146553ea6864bf
 Source1:	%{name}.desktop
 Patch0:		%{name}-libexec.patch
 URL:		http://qt.digia.com/Product/Developer-Tools
