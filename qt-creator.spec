@@ -1,13 +1,12 @@
 Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb developerow Qt
 Name:		qt-creator
-Version:	4.0.3
-Release:	3
+Version:	4.1.0
+Release:	1
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
-Source0:	http://download.qt.io/official_releases/qtcreator/4.0/%{version}/%{name}-opensource-src-%{version}.tar.gz
-# Source0-md5:	49ec41a08200e243bbcd315f258712f0
+Source0:	http://download.qt.io/official_releases/qtcreator/4.1/%{version}/%{name}-opensource-src-%{version}.tar.xz
 Source1:	%{name}.desktop
 Patch0:		%{name}-libexec.patch
 URL:		http://doc.qt.io/qt-5/topics-app-development.html
@@ -22,14 +21,13 @@ BuildRequires:	Qt5Svg-devel >= 5.4.0
 BuildRequires:	Qt5UiTools-devel >= 5.4.0
 BuildRequires:	Qt5WebKit-devel >= 5.4.0
 BuildRequires:	Qt5Xml-devel >= 5.4.0
-BuildRequires:	clang-devel
+BuildRequires:	clang-devel >= 3.8.0
 BuildRequires:	gdb
 BuildRequires:	libstdc++-devel
-BuildRequires:	llvm-devel
+BuildRequires:	llvm-devel >= 3.8.0
 BuildRequires:	qt5-build >= 5.4.0
 BuildRequires:	qt5-linguist
 BuildRequires:	qt5-qmake >= 5.4.0
-BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.602
 Requires(post,postun):	desktop-file-utils
 %requires_eq	Qt5Core
@@ -120,6 +118,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/qtcreator/lib*.so.*.*
 %attr(755,root,root) %{_libdir}/qtcreator/lib*.so
 %attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.1
+%attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.4
 %dir %{_libdir}/qtcreator/plugins
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/lib*.so
 %dir %{_libdir}/qtcreator/plugins/qbs
