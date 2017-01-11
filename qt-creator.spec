@@ -7,6 +7,7 @@ Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
 Source0:	http://download.qt.io/official_releases/qtcreator/4.1/%{version}/%{name}-opensource-src-%{version}.tar.xz
+# Source0-md5:	c90743aad6e222db88e4d52267b82cff
 Source1:	%{name}.desktop
 Patch0:		%{name}-libexec.patch
 URL:		http://doc.qt.io/qt-5/topics-app-development.html
