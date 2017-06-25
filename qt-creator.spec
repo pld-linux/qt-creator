@@ -1,40 +1,39 @@
 Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb developerow Qt
 Name:		qt-creator
-Version:	4.1.0
-Release:	2
+Version:	4.3.0
+Release:	1
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
-Source0:	http://download.qt.io/official_releases/qtcreator/4.1/%{version}/%{name}-opensource-src-%{version}.tar.xz
-# Source0-md5:	c90743aad6e222db88e4d52267b82cff
-Source1:	%{name}.desktop
+Source0:	http://download.qt.io/official_releases/qtcreator/4.3/%{version}/%{name}-opensource-src-%{version}.tar.xz
+# Source0-md5:	b8059b45c8b02a8d52d2d2e46b7b740b
 Patch0:		%{name}-libexec.patch
 URL:		http://doc.qt.io/qt-5/topics-app-development.html
-BuildRequires:	Qt5Concurrent-devel >= 5.4.0
-BuildRequires:	Qt5Declarative-devel >= 5.4.0
-BuildRequires:	Qt5Designer-devel >= 5.4.0
-BuildRequires:	Qt5Gui-devel >= 5.4.0
-BuildRequires:	Qt5Help-devel >= 5.4.0
-BuildRequires:	Qt5Network-devel >= 5.4.0
-BuildRequires:	Qt5Script-devel >= 5.4.0
-BuildRequires:	Qt5Svg-devel >= 5.4.0
-BuildRequires:	Qt5UiTools-devel >= 5.4.0
-BuildRequires:	Qt5WebKit-devel >= 5.4.0
-BuildRequires:	Qt5Xml-devel >= 5.4.0
-BuildRequires:	clang-devel >= 3.8.0
+BuildRequires:	Qt5Concurrent-devel >= 5.6.0
+BuildRequires:	Qt5Designer-devel >= 5.6.0
+BuildRequires:	Qt5Gui-devel >= 5.6.0
+BuildRequires:	Qt5Help-devel >= 5.6.0
+BuildRequires:	Qt5Network-devel >= 5.6.0
+BuildRequires:	Qt5Script-devel >= 5.6.0
+BuildRequires:	Qt5Svg-devel >= 5.6.0
+BuildRequires:	Qt5UiTools-devel >= 5.6.0
+BuildRequires:	Qt5WebKit-devel >= 5.6.0
+BuildRequires:	Qt5Xml-devel >= 5.6.0
+BuildRequires:	clang-devel >= 3.9.0
 BuildRequires:	gdb
 BuildRequires:	libstdc++-devel
-BuildRequires:	llvm-devel >= 3.8.0
-BuildRequires:	qt5-build >= 5.4.0
+BuildRequires:	llvm-devel >= 3.9.0
+BuildRequires:	qt5-build >= 5.6.0
 BuildRequires:	qt5-linguist
-BuildRequires:	qt5-qmake >= 5.4.0
+BuildRequires:	qt5-qmake >= 5.6.0
 BuildRequires:	rpmbuild(macros) >= 1.602
 Requires(post,postun):	desktop-file-utils
 %requires_eq	Qt5Core
 Requires:	Qt5Gui-platform-xcb
 Requires:	Qt5Quick-controls
 Requires:	Qt5Sql-sqldriver-sqlite3
+Requires:	qt5-qtdeclarative
 Requires:	hicolor-icon-theme
 # for xdg-open
 Suggests:	xdg-utils
@@ -82,7 +81,7 @@ export QTDIR=%{_libdir}/qt5
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/ld.so.conf.d
 echo "%{_libdir}/qtcreator" > $RPM_BUILD_ROOT%{_sysconfdir}/ld.so.conf.d/qtcreator.conf
 
-cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}/%{name}.desktop
+rm -f $RPM_BUILD_ROOT%{_libdir}/qtcreator/*.prl
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -102,6 +101,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/qbs
 %attr(755,root,root) %{_bindir}/qbs-config
 %attr(755,root,root) %{_bindir}/qbs-config-ui
+%attr(755,root,root) %{_bindir}/qbs-create-project
 %attr(755,root,root) %{_bindir}/qbs-qmltypes
 %attr(755,root,root) %{_bindir}/qbs-setup-android
 %attr(755,root,root) %{_bindir}/qbs-setup-qt
@@ -111,7 +111,10 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/qtcreator
 %attr(755,root,root) %{_libdir}/qtcreator/buildoutputparser
 %attr(755,root,root) %{_libdir}/qtcreator/clangbackend
+%attr(755,root,root) %{_libdir}/qtcreator/clangpchmanagerbackend
+%attr(755,root,root) %{_libdir}/qtcreator/clangrefactoringbackend
 %attr(755,root,root) %{_libdir}/qtcreator/cpaster
+%attr(755,root,root) %{_libdir}/qtcreator/qbs_processlauncher
 %attr(755,root,root) %{_libdir}/qtcreator/qml2puppet
 %attr(755,root,root) %{_libdir}/qtcreator/qtcreator_process_stub
 %attr(755,root,root) %{_libdir}/qtcreator/qtpromaker
@@ -130,5 +133,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qmldesigner/libcomponentsplugin.so
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qmldesigner/libqtquickplugin.so
 %{_datadir}/qtcreator
-%{_desktopdir}/qt-creator.desktop
+%{_datadir}/metainfo/org.qt-project.qtcreator.appdata.xml
+%{_desktopdir}/org.qt-project.qtcreator.desktop
 %{_iconsdir}/hicolor/*/*/*.png

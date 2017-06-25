@@ -18,28 +18,3 @@
      INSTALL_DATA_PATH    = $$QTC_PREFIX/share/qtcreator
      INSTALL_DOC_PATH     = $$QTC_PREFIX/share/doc/qtcreator
      INSTALL_BIN_PATH     = $$QTC_PREFIX/bin
---- qt-creator-opensource-src-3.6.1/src/plugins/coreplugin/icore.cpp.orig	2016-03-08 12:30:19.000000000 +0100
-+++ qt-creator-opensource-src-3.6.1/src/plugins/coreplugin/icore.cpp	2016-09-27 22:33:01.376312984 +0200
-@@ -435,21 +435,7 @@
-  */
- QString ICore::libexecPath()
- {
--    QString path;
--    switch (Utils::HostOsInfo::hostOs()) {
--    case Utils::OsTypeWindows:
--        path = QCoreApplication::applicationDirPath();
--        break;
--    case Utils::OsTypeMac:
--        path = QCoreApplication::applicationDirPath() + QLatin1String("/../Resources");
--        break;
--    case Utils::OsTypeLinux:
--    case Utils::OsTypeOtherUnix:
--    case Utils::OsTypeOther:
--        path = QCoreApplication::applicationDirPath() + QLatin1String("/../libexec/qtcreator");
--        break;
--    }
--    return QDir::cleanPath(path);
-+    return QDir::cleanPath(QLatin1String("/usr/" IDE_LIBRARY_BASENAME "/qtcreator"));
- }
- 
- static QString compilerString()
