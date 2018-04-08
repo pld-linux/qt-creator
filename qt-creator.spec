@@ -1,14 +1,13 @@
 Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb developerow Qt
 Name:		qt-creator
-Version:	4.3.0
-Release:	2
+Version:	4.6.0
+Release:	1
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
-Source0:	http://download.qt.io/official_releases/qtcreator/4.3/%{version}/%{name}-opensource-src-%{version}.tar.xz
-# Source0-md5:	b8059b45c8b02a8d52d2d2e46b7b740b
-Patch0:		%{name}-libexec.patch
+Source0:	http://download.qt.io/official_releases/qtcreator/4.6/%{version}/%{name}-opensource-src-%{version}.tar.xz
+# Source0-md5:	8aae7bc90f1973b86f6dd75d63dbaded
 URL:		http://doc.qt.io/qt-5/topics-app-development.html
 BuildRequires:	Qt5Concurrent-devel >= 5.6.0
 BuildRequires:	Qt5Designer-devel >= 5.6.0
@@ -33,11 +32,13 @@ Requires(post,postun):	desktop-file-utils
 Requires:	Qt5Gui-platform-xcb
 Requires:	Qt5Quick-controls
 Requires:	Qt5Sql-sqldriver-sqlite3
-Requires:	qt5-qtdeclarative
 Requires:	hicolor-icon-theme
+Requires:	qt5-qtdeclarative
 # for xdg-open
 Suggests:	xdg-utils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		skip_post_check_so	'libClangsupport\.so.*'
 
 %description
 Qt Creator is a cross-platform integrated development environment
@@ -49,7 +50,6 @@ Qt.
 
 %prep
 %setup -q -n %{name}-opensource-src-%{version}
-%patch0 -p1
 
 # fix unresolved symbols in libQtcSsh
 echo >> src/libs/ssh/ssh_dependencies.pri
@@ -65,6 +65,7 @@ qmake-qt5 qtcreator.pro \
 	LLVM_INSTALL_DIR="%{_prefix}" \
 	QMAKE_CXX="%{__cxx}" \
 	QMAKE_LINK="%{__cxx}" \
+	QMAKE_CFLAGS_ISYSTEM=-I \
 	QMAKE_CXXFLAGS_RELEASE="%{rpmcxxflags}" \
 	QMAKE_RPATH=
 
@@ -102,23 +103,22 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/qbs-config
 %attr(755,root,root) %{_bindir}/qbs-config-ui
 %attr(755,root,root) %{_bindir}/qbs-create-project
-%attr(755,root,root) %{_bindir}/qbs-qmltypes
 %attr(755,root,root) %{_bindir}/qbs-setup-android
 %attr(755,root,root) %{_bindir}/qbs-setup-qt
 %attr(755,root,root) %{_bindir}/qbs-setup-toolchains
 %attr(755,root,root) %{_bindir}/qtcreator
 %{_sysconfdir}/ld.so.conf.d/qtcreator.conf
+%dir %{_libexecdir}/qtcreator
+%attr(755,root,root) %{_libexecdir}/qtcreator/buildoutputparser
+%attr(755,root,root) %{_libexecdir}/qtcreator/clangbackend
+%attr(755,root,root) %{_libexecdir}/qtcreator/cpaster
+%attr(755,root,root) %{_libexecdir}/qtcreator/dmgbuild
+%attr(755,root,root) %{_libexecdir}/qtcreator/qbs_processlauncher
+%attr(755,root,root) %{_libexecdir}/qtcreator/qml2puppet
+%attr(755,root,root) %{_libexecdir}/qtcreator/qtcreator_process_stub
+%attr(755,root,root) %{_libexecdir}/qtcreator/qtpromaker
+%attr(755,root,root) %{_libexecdir}/qtcreator/sdktool
 %dir %{_libdir}/qtcreator
-%attr(755,root,root) %{_libdir}/qtcreator/buildoutputparser
-%attr(755,root,root) %{_libdir}/qtcreator/clangbackend
-%attr(755,root,root) %{_libdir}/qtcreator/clangpchmanagerbackend
-%attr(755,root,root) %{_libdir}/qtcreator/clangrefactoringbackend
-%attr(755,root,root) %{_libdir}/qtcreator/cpaster
-%attr(755,root,root) %{_libdir}/qtcreator/qbs_processlauncher
-%attr(755,root,root) %{_libdir}/qtcreator/qml2puppet
-%attr(755,root,root) %{_libdir}/qtcreator/qtcreator_process_stub
-%attr(755,root,root) %{_libdir}/qtcreator/qtpromaker
-%attr(755,root,root) %{_libdir}/qtcreator/sdktool
 %attr(755,root,root) %{_libdir}/qtcreator/lib*.so.*.*
 %attr(755,root,root) %{_libdir}/qtcreator/lib*.so
 %attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.1
@@ -127,8 +127,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/lib*.so
 %dir %{_libdir}/qtcreator/plugins/qbs
 %dir %{_libdir}/qtcreator/plugins/qbs/plugins
+%attr(755,root,root) %{_libdir}/qtcreator/plugins/qbs/plugins/libclangcompilationdbgenerator.so
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qbs/plugins/libqbs_cpp_scanner.so
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qbs/plugins/libqbs_qt_scanner.so
+%attr(755,root,root) %{_libdir}/qtcreator/plugins/qbs/plugins/libvisualstudiogenerator.so
 %dir %{_libdir}/qtcreator/plugins/qmldesigner
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qmldesigner/libcomponentsplugin.so
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qmldesigner/libqtquickplugin.so
