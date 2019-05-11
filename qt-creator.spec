@@ -8,6 +8,7 @@ License:	LGPL v2.1
 Group:		X11/Development/Tools
 Source0:	http://download.qt.io/official_releases/qtcreator/4.8/%{version}/%{name}-opensource-src-%{version}.tar.xz
 # Source0-md5:	bf5b9953cfec44aa2504e30cb81768e6
+Patch0:		x32.patch
 URL:		http://doc.qt.io/qt-5/topics-app-development.html
 BuildRequires:	Qt5Concurrent-devel >= 5.9.0
 BuildRequires:	Qt5Designer-devel >= 5.9.0
@@ -52,6 +53,9 @@ Qt.
 
 %prep
 %setup -q -n %{name}-opensource-src-%{version}
+%ifarch x32
+%patch0 -p1
+%endif
 
 # fix unresolved symbols in libQtcSsh
 echo >> src/libs/ssh/ssh_dependencies.pri
