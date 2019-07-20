@@ -1,14 +1,13 @@
 Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb developerow Qt
 Name:		qt-creator
-Version:	4.8.2
-Release:	2
+Version:	4.9.2
+Release:	1
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
-Source0:	http://download.qt.io/official_releases/qtcreator/4.8/%{version}/%{name}-opensource-src-%{version}.tar.xz
-# Source0-md5:	bf5b9953cfec44aa2504e30cb81768e6
-Patch0:		x32.patch
+Source0:	http://download.qt.io/official_releases/qtcreator/4.9/%{version}/%{name}-opensource-src-%{version}.tar.xz
+# Source0-md5:	9dd9d52ed1fa4b9f41ff6fe2a9d79368
 URL:		http://doc.qt.io/qt-5/topics-app-development.html
 BuildRequires:	Qt5Concurrent-devel >= 5.9.0
 BuildRequires:	Qt5Designer-devel >= 5.9.0
@@ -25,7 +24,7 @@ BuildRequires:	Qt5Xml-devel >= 5.9.0
 BuildRequires:	clang-devel >= 6.0.0
 BuildRequires:	gdb
 BuildRequires:	libstdc++-devel
-BuildRequires:	llvm-devel >= 6.0.0
+BuildRequires:	llvm-devel >= 7.0.0
 BuildRequires:	qt5-build >= 5.9.0
 BuildRequires:	qt5-linguist
 BuildRequires:	qt5-qmake >= 5.9.0
@@ -53,9 +52,6 @@ Qt.
 
 %prep
 %setup -q -n %{name}-opensource-src-%{version}
-%ifarch x32
-%patch0 -p1
-%endif
 
 # fix unresolved symbols in libQtcSsh
 echo >> src/libs/ssh/ssh_dependencies.pri
@@ -119,9 +115,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libexecdir}/qtcreator/clangbackend
 %attr(755,root,root) %{_libexecdir}/qtcreator/cpaster
 %attr(755,root,root) %{_libexecdir}/qtcreator/dmgbuild
+%attr(755,root,root) %{_libexecdir}/qtcreator/perfparser
 %attr(755,root,root) %{_libexecdir}/qtcreator/qbs_processlauncher
 %attr(755,root,root) %{_libexecdir}/qtcreator/qml2puppet
 %attr(755,root,root) %{_libexecdir}/qtcreator/qtcreator_process_stub
+%attr(755,root,root) %{_libexecdir}/qtcreator/qtc-askpass
 %attr(755,root,root) %{_libexecdir}/qtcreator/qtpromaker
 %attr(755,root,root) %{_libexecdir}/qtcreator/sdktool
 %dir %{_libdir}/qtcreator
