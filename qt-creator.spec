@@ -2,7 +2,7 @@ Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb developerow Qt
 Name:		qt-creator
 Version:	4.10.2
-Release:	1
+Release:	2
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
@@ -56,6 +56,8 @@ Qt.
 # fix unresolved symbols in libQtcSsh
 echo >> src/libs/ssh/ssh_dependencies.pri
 echo "LIBS += -ldl" >> src/libs/ssh/ssh_dependencies.pri
+
+sed -i '1s|^#!.*python\b|#!%{__python}|' src/shared/qbs/src/3rdparty/python/bin/dmgbuild
 
 %build
 export QTDIR=%{_libdir}/qt5
