@@ -1,14 +1,13 @@
 Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb developerow Qt
 Name:		qt-creator
-Version:	4.11.2
-Release:	3
+Version:	4.12.1
+Release:	1
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
-Source0:	http://download.qt.io/official_releases/qtcreator/4.11/%{version}/%{name}-opensource-src-%{version}.tar.xz
-# Source0-md5:	91a1e74b75dadfc336bb76d2bde7c270
-Patch0:		llvm10.patch
+Source0:	http://download.qt.io/official_releases/qtcreator/4.12/%{version}/%{name}-opensource-src-%{version}.tar.xz
+# Source0-md5:	94bae069d5784b880553ca252a2852a7
 URL:		http://doc.qt.io/qt-5/topics-app-development.html
 BuildRequires:	Qt5Concurrent-devel >= 5.9.0
 BuildRequires:	Qt5Designer-devel >= 5.9.0
@@ -53,7 +52,6 @@ Qt.
 
 %prep
 %setup -q -n %{name}-opensource-src-%{version}
-%patch0 -p1
 
 # fix unresolved symbols in libQtcSsh
 echo >> src/libs/ssh/ssh_dependencies.pri
