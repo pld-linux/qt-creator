@@ -1,13 +1,13 @@
 Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb developerow Qt
 Name:		qt-creator
-Version:	4.12.1
+Version:	4.13.0
 Release:	1
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
-Source0:	http://download.qt.io/official_releases/qtcreator/4.12/%{version}/%{name}-opensource-src-%{version}.tar.xz
-# Source0-md5:	94bae069d5784b880553ca252a2852a7
+Source0:	http://download.qt.io/official_releases/qtcreator/4.13/%{version}/%{name}-opensource-src-%{version}.tar.xz
+# Source0-md5:	de422b823ddf4d5c70bdfa455d96e1b9
 URL:		http://doc.qt.io/qt-5/topics-app-development.html
 BuildRequires:	Qt5Concurrent-devel >= 5.9.0
 BuildRequires:	Qt5Designer-devel >= 5.9.0
@@ -115,8 +115,6 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libexecdir}/qtcreator
 %attr(755,root,root) %{_libexecdir}/qtcreator/buildoutputparser
 %attr(755,root,root) %{_libexecdir}/qtcreator/clangbackend
-%attr(755,root,root) %{_libexecdir}/qtcreator/clangpchmanagerbackend
-%attr(755,root,root) %{_libexecdir}/qtcreator/clangrefactoringbackend
 %attr(755,root,root) %{_libexecdir}/qtcreator/cpaster
 %attr(755,root,root) %{_libexecdir}/qtcreator/dmgbuild
 %attr(755,root,root) %{_libexecdir}/qtcreator/perfparser
@@ -143,6 +141,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qbs/plugins/libqbs_qt_scanner.so
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qbs/plugins/libvisualstudiogenerator.so
 %dir %{_libdir}/qtcreator/plugins/qmldesigner
+%attr(755,root,root) %{_libdir}/qtcreator/plugins/qmldesigner/libassetexporterplugin.so
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qmldesigner/libcomponentsplugin.so
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qmldesigner/libqmlpreviewplugin.so
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qmldesigner/libqtquickplugin.so
