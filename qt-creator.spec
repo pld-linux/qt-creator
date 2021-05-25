@@ -6,7 +6,7 @@ Release:	5
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
-Source0:	http://download.qt.io/official_releases/qtcreator/4.13/%{version}/%{name}-opensource-src-%{version}.tar.xz
+Source0:	https://download.qt.io/official_releases/qtcreator/4.13/%{version}/%{name}-opensource-src-%{version}.tar.xz
 # Source0-md5:	de422b823ddf4d5c70bdfa455d96e1b9
 URL:		http://doc.qt.io/qt-5/topics-app-development.html
 BuildRequires:	Qt5Concurrent-devel >= 5.9.0
