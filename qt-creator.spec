@@ -29,6 +29,8 @@ BuildRequires:	qt5-build >= 5.9.0
 BuildRequires:	qt5-linguist
 BuildRequires:	qt5-qmake >= 5.9.0
 BuildRequires:	rpmbuild(macros) >= 1.602
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz
 Requires(post,postun):	desktop-file-utils
 %requires_eq	Qt5Core
 Requires:	Qt5Gui-platform-xcb
