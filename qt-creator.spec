@@ -1,13 +1,13 @@
 Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb developerow Qt
 Name:		qt-creator
-Version:	4.13.0
-Release:	5
+Version:	4.15.0
+Release:	1
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
-Source0:	https://download.qt.io/official_releases/qtcreator/4.13/%{version}/%{name}-opensource-src-%{version}.tar.xz
-# Source0-md5:	de422b823ddf4d5c70bdfa455d96e1b9
+Source0:	https://download.qt.io/official_releases/qtcreator/4.15/%{version}/%{name}-opensource-src-%{version}.tar.xz
+# Source0-md5:	439a5090c367fb43dba2df6f74a8c941
 URL:		http://doc.qt.io/qt-5/topics-app-development.html
 BuildRequires:	Qt5Concurrent-devel >= 5.9.0
 BuildRequires:	Qt5Designer-devel >= 5.9.0
