@@ -1,13 +1,13 @@
 Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb developerow Qt
 Name:		qt-creator
-Version:	4.15.0
+Version:	5.0.3
 Release:	1
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
-Source0:	https://download.qt.io/official_releases/qtcreator/4.15/%{version}/%{name}-opensource-src-%{version}.tar.xz
-# Source0-md5:	439a5090c367fb43dba2df6f74a8c941
+Source0:	https://download.qt.io/official_releases/qtcreator/5.0/%{version}/%{name}-opensource-src-%{version}.tar.xz
+# Source0-md5:	94fad14bd0ecd5e9388899a984f851c0
 URL:		http://doc.qt.io/qt-5/topics-app-development.html
 BuildRequires:	Qt5Concurrent-devel >= 5.9.0
 BuildRequires:	Qt5Designer-devel >= 5.9.0
@@ -87,6 +87,7 @@ export QTDIR=%{_libdir}/qt5
 
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/ld.so.conf.d
 echo "%{_libdir}/qtcreator" > $RPM_BUILD_ROOT%{_sysconfdir}/ld.so.conf.d/qtcreator.conf
+cp -p share/applications/org.qt-project.qtcreator.desktop $RPM_BUILD_ROOT%{_desktopdir}
 
 rm -f $RPM_BUILD_ROOT%{_libdir}/qtcreator/*.prl
 
@@ -130,7 +131,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/qtcreator/lib*.so.*.*
 %attr(755,root,root) %{_libdir}/qtcreator/lib*.so
 %attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.1
-%attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.4
+%attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.5
 %dir %{_libdir}/qtcreator/plugins
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/lib*.so
 %dir %{_libdir}/qtcreator/plugins/qbs
