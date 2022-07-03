@@ -1,14 +1,14 @@
 Summary:	An IDE tailored to the needs of Qt developers
-Summary(pl.UTF-8):	IDE dostosowane do potrzeb developerow Qt
+Summary(pl.UTF-8):	IDE dostosowane do potrzeb programistów Qt
 Name:		qt-creator
 Version:	5.0.3
-Release:	3
+Release:	4
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
 Source0:	https://download.qt.io/official_releases/qtcreator/5.0/%{version}/%{name}-opensource-src-%{version}.tar.xz
 # Source0-md5:	94fad14bd0ecd5e9388899a984f851c0
-URL:		http://doc.qt.io/qt-5/topics-app-development.html
+URL:		https://doc.qt.io/qt-5/topics-app-development.html
 BuildRequires:	Qt5Concurrent-devel >= 5.9.0
 BuildRequires:	Qt5Designer-devel >= 5.9.0
 BuildRequires:	Qt5Gui-devel >= 5.9.0
@@ -49,7 +49,7 @@ Qt Creator is a cross-platform integrated development environment
 (IDE) tailored to the needs of Qt developers.
 
 %description -l pl.UTF-8
-Qt Creator to wieloplatformowe IDE dostosowane do potrzeb developerow
+Qt Creator to wieloplatformowe IDE dostosowane do potrzeb programistów
 Qt.
 
 %prep
@@ -151,4 +151,4 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/qtcreator
 %{_datadir}/metainfo/org.qt-project.qtcreator.appdata.xml
 %{_desktopdir}/org.qt-project.qtcreator.desktop
-%{_iconsdir}/hicolor/*/*/*.png
+%{_iconsdir}/hicolor/*x*/apps/QtProject-qtcreator.png
