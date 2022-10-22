@@ -1,0 +1,34 @@
+From e238c8f0a4caf3d1487205093cffee9f56b56516 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Robert=20L=C3=B6hning?= <robert.loehning@qt.io>
+Date: Wed, 19 Oct 2022 10:49:14 +0200
+Subject: ClangFormat: Fix compilation with LLVM 15
+
+Change-Id: I7990e8331c317d3bc363be610b2585d37dee4445
+Reviewed-by: <github-actions-qt-creator@cristianadam.eu>
+Reviewed-by: Christian Kandeler <christian.kandeler@qt.io>
+(cherry picked from commit a1bfcbf30d493e1e1fab94851fe50fed81cd3d6e)
+Reviewed-by: Qt CI Bot <qt_ci_bot@qt-project.org>
+Reviewed-by: Eike Ziller <eike.ziller@qt.io>
+---
+ src/plugins/clangformat/clangformatutils.cpp | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/plugins/clangformat/clangformatutils.cpp b/src/plugins/clangformat/clangformatutils.cpp
+index 230078558e..1e0429d80f 100644
+--- a/src/plugins/clangformat/clangformatutils.cpp
++++ b/src/plugins/clangformat/clangformatutils.cpp
+@@ -118,7 +118,11 @@ clang::format::FormatStyle qtcStyle()
+     style.ColumnLimit = 100;
+     style.CommentPragmas = "^ IWYU pragma:";
+     style.CompactNamespaces = false;
++#if LLVM_VERSION_MAJOR >= 15
++    style.PackConstructorInitializers = FormatStyle::PCIS_BinPack;
++#else
+     style.ConstructorInitializerAllOnOneLineOrOnePerLine = false;
++#endif
+     style.ConstructorInitializerIndentWidth = 4;
+     style.ContinuationIndentWidth = 4;
+     style.Cpp11BracedListStyle = true;
+-- 
+cgit v1.2.1
+

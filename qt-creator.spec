@@ -8,6 +8,7 @@ License:	LGPL v2.1
 Group:		X11/Development/Tools
 Source0:	https://download.qt.io/official_releases/qtcreator/8.0/%{version}/%{name}-opensource-src-%{version}.tar.xz
 # Source0-md5:	bdd73958efa2383a6a0953b81f48cc57
+Patch0:		llvm15.patch
 URL:		https://doc.qt.io/qt-5/topics-app-development.html
 BuildRequires:	Qt5Concurrent-devel >= 5.9.0
 BuildRequires:	Qt5Designer-devel >= 5.9.0
@@ -55,6 +56,7 @@ Qt.
 
 %prep
 %setup -q -n %{name}-opensource-src-%{version}
+%patch0 -p1
 
 sed -i '1s|^#!.*python\b|#!%{__python}|' src/shared/qbs/src/3rdparty/python/bin/dmgbuild
 
