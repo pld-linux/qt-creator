@@ -1,13 +1,13 @@
 Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb programistów Qt
 Name:		qt-creator
-Version:	5.0.3
-Release:	5
+Version:	8.0.2
+Release:	1
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
-Source0:	https://download.qt.io/official_releases/qtcreator/5.0/%{version}/%{name}-opensource-src-%{version}.tar.xz
-# Source0-md5:	94fad14bd0ecd5e9388899a984f851c0
+Source0:	https://download.qt.io/official_releases/qtcreator/8.0/%{version}/%{name}-opensource-src-%{version}.tar.xz
+# Source0-md5:	bdd73958efa2383a6a0953b81f48cc57
 URL:		https://doc.qt.io/qt-5/topics-app-development.html
 BuildRequires:	Qt5Concurrent-devel >= 5.9.0
 BuildRequires:	Qt5Designer-devel >= 5.9.0
@@ -22,13 +22,14 @@ BuildRequires:	Qt5UiTools-devel >= 5.9.0
 BuildRequires:	Qt5WebKit-devel >= 5.9.0
 BuildRequires:	Qt5Xml-devel >= 5.9.0
 BuildRequires:	clang-devel >= 6.0.0
+BuildRequires:	cmake
 BuildRequires:	gdb
 BuildRequires:	libstdc++-devel
 BuildRequires:	llvm-devel >= 7.0.0
 BuildRequires:	qt5-build >= 5.9.0
 BuildRequires:	qt5-linguist
 BuildRequires:	qt5-qmake >= 5.9.0
-BuildRequires:	rpmbuild(macros) >= 1.602
+BuildRequires:	rpmbuild(macros) >= 1.605
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 Requires(post,postun):	desktop-file-utils
@@ -55,35 +56,20 @@ Qt.
 %prep
 %setup -q -n %{name}-opensource-src-%{version}
 
-# fix unresolved symbols in libQtcSsh
-echo >> src/libs/ssh/ssh_dependencies.pri
-echo "LIBS += -ldl" >> src/libs/ssh/ssh_dependencies.pri
-
 sed -i '1s|^#!.*python\b|#!%{__python}|' src/shared/qbs/src/3rdparty/python/bin/dmgbuild
 
 %build
-export QTDIR=%{_libdir}/qt5
-# the qmakespec in qt4 is somewhat broken, need to look at this
-#export QMAKESPEC=%{_datadir}/qt4/mkspecs/linux-g++/
+%cmake -B build \
+	-DBUILD_QBS:BOOL=ON
 
-qmake-qt5 qtcreator.pro \
-	IDE_LIBRARY_BASENAME="%{_lib}" \
-	LLVM_INSTALL_DIR="%{_prefix}" \
-	QMAKE_CXX="%{__cxx}" \
-	QMAKE_LINK="%{__cxx}" \
-	QMAKE_CFLAGS_ISYSTEM=-I \
-	QMAKE_CXXFLAGS_RELEASE="%{rpmcxxflags}" \
-	QMAKE_RPATH=
-
-%{__make}
+%{__make} -C build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_desktopdir}
 
-export QTDIR=%{_libdir}/qt5
-%{__make} install \
-	INSTALL_ROOT=$RPM_BUILD_ROOT%{_prefix}
+%{__make} -C build install \
+	DESTDIR=$RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/ld.so.conf.d
 echo "%{_libdir}/qtcreator" > $RPM_BUILD_ROOT%{_sysconfdir}/ld.so.conf.d/qtcreator.conf
@@ -117,10 +103,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/ld.so.conf.d/qtcreator.conf
 %dir %{_libexecdir}/qtcreator
 %attr(755,root,root) %{_libexecdir}/qtcreator/buildoutputparser
-%attr(755,root,root) %{_libexecdir}/qtcreator/clangbackend
 %attr(755,root,root) %{_libexecdir}/qtcreator/cpaster
 %attr(755,root,root) %{_libexecdir}/qtcreator/dmgbuild
+%attr(755,root,root) %{_libexecdir}/qtcreator/perf2text
 %attr(755,root,root) %{_libexecdir}/qtcreator/perfparser
+%attr(755,root,root) %{_libexecdir}/qtcreator/qtcreator_processlauncher
 %attr(755,root,root) %{_libexecdir}/qtcreator/qbs_processlauncher
 %attr(755,root,root) %{_libexecdir}/qtcreator/qml2puppet
 %attr(755,root,root) %{_libexecdir}/qtcreator/qtcreator_process_stub
@@ -130,8 +117,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/qtcreator
 %attr(755,root,root) %{_libdir}/qtcreator/lib*.so.*.*
 %attr(755,root,root) %{_libdir}/qtcreator/lib*.so
-%attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.1
-%attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.5
+%attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.8
 %dir %{_libdir}/qtcreator/plugins
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/lib*.so
 %dir %{_libdir}/qtcreator/plugins/qbs
@@ -143,11 +129,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qbs/plugins/libqbs_cpp_scanner.so
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qbs/plugins/libqbs_qt_scanner.so
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qbs/plugins/libvisualstudiogenerator.so
-%dir %{_libdir}/qtcreator/plugins/qmldesigner
-%attr(755,root,root) %{_libdir}/qtcreator/plugins/qmldesigner/libassetexporterplugin.so
-%attr(755,root,root) %{_libdir}/qtcreator/plugins/qmldesigner/libcomponentsplugin.so
-%attr(755,root,root) %{_libdir}/qtcreator/plugins/qmldesigner/libqmlpreviewplugin.so
-%attr(755,root,root) %{_libdir}/qtcreator/plugins/qmldesigner/libqtquickplugin.so
 %{_datadir}/qtcreator
 %{_datadir}/metainfo/org.qt-project.qtcreator.appdata.xml
 %{_desktopdir}/org.qt-project.qtcreator.desktop
