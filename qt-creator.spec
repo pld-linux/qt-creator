@@ -1,3 +1,13 @@
+#
+# Conditional build:
+%bcond_without	webengine	# QtWebEngine based help viewer
+
+%ifnarch %{x8664} aarch64
+%undefine	with_webengine
+%endif
+
+%define		qtver	6
+
 Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb programistów Qt
 Name:		qt-creator
@@ -10,34 +20,37 @@ Source0:	https://download.qt.io/official_releases/qtcreator/8.0/%{version}/%{nam
 # Source0-md5:	bdd73958efa2383a6a0953b81f48cc57
 Patch0:		llvm15.patch
 URL:		https://doc.qt.io/qt-5/topics-app-development.html
-BuildRequires:	Qt5Concurrent-devel >= 5.9.0
-BuildRequires:	Qt5Designer-devel >= 5.9.0
-BuildRequires:	Qt5Gui-devel >= 5.9.0
-BuildRequires:	Qt5Help-devel >= 5.9.0
-BuildRequires:	Qt5Network-devel >= 5.9.0
-BuildRequires:	Qt5Quick-controls >= 5.9.0
-BuildRequires:	Qt5Quick-devel >= 5.9.0
-BuildRequires:	Qt5Script-devel >= 5.9.0
-BuildRequires:	Qt5Svg-devel >= 5.9.0
-BuildRequires:	Qt5UiTools-devel >= 5.9.0
-BuildRequires:	Qt5WebKit-devel >= 5.9.0
-BuildRequires:	Qt5Xml-devel >= 5.9.0
+BuildRequires:	Qt6Concurrent-devel >= %{qtver}
+BuildRequires:	Qt6Designer-devel >= %{qtver}
+BuildRequires:	Qt6Gui-devel >= %{qtver}
+BuildRequires:	Qt6Help-devel >= %{qtver}
+BuildRequires:	Qt6Network-devel >= %{qtver}
+BuildRequires:	Qt6PrintSupport-devel >= %{qtver}
+BuildRequires:	Qt6Qml-devel >= %{qtver}
+BuildRequires:	Qt6Qt5Compat-devel >= %{qtver}
+BuildRequires:	Qt6Quick-devel >= %{qtver}
+BuildRequires:	Qt6SerialPort-devel >= %{qtver}
+BuildRequires:	Qt6ShaderTools-devel >= %{qtver}
+BuildRequires:	Qt6Sql-devel >= %{qtver}
+BuildRequires:	Qt6Svg-devel >= %{qtver}
+BuildRequires:	Qt6UiTools-devel >= %{qtver}
+%{?with_webengine:BuildRequires:	Qt6WebEngine-devel >= %{qtver}}
+BuildRequires:	Qt6Widgets-devel >= %{qtver}
+BuildRequires:	Qt6Xml-devel >= %{qtver}
 BuildRequires:	clang-devel >= 6.0.0
-BuildRequires:	cmake
 BuildRequires:	gdb
 BuildRequires:	libstdc++-devel
 BuildRequires:	llvm-devel >= 7.0.0
-BuildRequires:	qt5-build >= 5.9.0
-BuildRequires:	qt5-linguist
-BuildRequires:	qt5-qmake >= 5.9.0
-BuildRequires:	rpmbuild(macros) >= 1.605
+BuildRequires:	qt6-build >= %{qtver}
+BuildRequires:	qt6-linguist
+BuildRequires:	qt6-shadertools
+BuildRequires:	rpmbuild(macros) >= 1.742
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 Requires(post,postun):	desktop-file-utils
-%requires_eq	Qt5Core
-Requires:	Qt5Gui-platform-xcb
-Requires:	Qt5Quick-controls
-Requires:	Qt5Sql-sqldriver-sqlite3
+%requires_eq	Qt6Core
+Requires:	Qt6Gui-platform-xcb
+Requires:	Qt6Sql-sqldriver-sqlite3
 Requires:	hicolor-icon-theme
 Requires:	qt5-qtdeclarative
 # for xdg-open
@@ -62,7 +75,8 @@ sed -i '1s|^#!.*python\b|#!%{__python}|' src/shared/qbs/src/3rdparty/python/bin/
 
 %build
 %cmake -B build \
-	-DBUILD_QBS:BOOL=ON
+	-DBUILD_QBS:BOOL=ON \
+	%{cmake_on_off webengine BUILD_HELPVIEWERBACKEND_QTWEBENGINE}
 
 %{__make} -C build
 
@@ -131,6 +145,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qbs/plugins/libqbs_cpp_scanner.so
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qbs/plugins/libqbs_qt_scanner.so
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qbs/plugins/libvisualstudiogenerator.so
+%dir %{_libdir}/qtcreator/plugins/qmldesigner
+%attr(755,root,root) %{_libdir}/qtcreator/plugins/qmldesigner/libStudioPlugin.so
+%attr(755,root,root) %{_libdir}/qtcreator/plugins/qmldesigner/libassetexporterplugin.so
+%attr(755,root,root) %{_libdir}/qtcreator/plugins/qmldesigner/libcomponentsplugin.so
+%attr(755,root,root) %{_libdir}/qtcreator/plugins/qmldesigner/libqmlpreviewplugin.so
+%attr(755,root,root) %{_libdir}/qtcreator/plugins/qmldesigner/libqtquickplugin.so
 %{_datadir}/qtcreator
 %{_datadir}/metainfo/org.qt-project.qtcreator.appdata.xml
 %{_desktopdir}/org.qt-project.qtcreator.desktop
