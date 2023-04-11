@@ -1,0 +1,11 @@
+--- qt-creator-opensource-src-10.0.0/src/shared/qbs/src/lib/corelib/jsextensions/domxml.cpp.orig	2023-04-11 21:39:31.321826852 +0200
++++ qt-creator-opensource-src-10.0.0/src/shared/qbs/src/lib/corelib/jsextensions/domxml.cpp	2023-04-11 21:39:38.731872451 +0200
+@@ -369,7 +369,7 @@
+ 
+ template<> bool XmlDomNode<QDomDocument>::setContent(const QString &content)
+ {
+-    return m_value.setContent(content);
++    return bool(m_value.setContent(content));
+ }
+ 
+ template<> QString XmlDomNode<QDomDocument>::toString(int indent)

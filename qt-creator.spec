@@ -11,14 +11,14 @@
 Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb programistów Qt
 Name:		qt-creator
-Version:	8.0.2
-Release:	6
+Version:	10.0.0
+Release:	1
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
-Source0:	https://download.qt.io/official_releases/qtcreator/8.0/%{version}/%{name}-opensource-src-%{version}.tar.xz
-# Source0-md5:	bdd73958efa2383a6a0953b81f48cc57
-Patch0:		llvm15.patch
+Source0:	https://download.qt.io/official_releases/qtcreator/10.0/%{version}/%{name}-opensource-src-%{version}.tar.xz
+# Source0-md5:	fceb0dc8bacc759d5291574be1190c2f
+Patch0:		build.patch
 URL:		https://doc.qt.io/qt-5/topics-app-development.html
 BuildRequires:	Qt6Concurrent-devel >= %{qtver}
 BuildRequires:	Qt6Designer-devel >= %{qtver}
@@ -38,6 +38,7 @@ BuildRequires:	Qt6UiTools-devel >= %{qtver}
 BuildRequires:	Qt6Widgets-devel >= %{qtver}
 BuildRequires:	Qt6Xml-devel >= %{qtver}
 BuildRequires:	clang-devel >= 6.0.0
+BuildRequires:	cmake >= 3.16
 BuildRequires:	gdb
 BuildRequires:	libstdc++-devel
 BuildRequires:	llvm-devel >= 7.0.0
@@ -125,7 +126,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libexecdir}/qtcreator/perfparser
 %attr(755,root,root) %{_libexecdir}/qtcreator/qtcreator_processlauncher
 %attr(755,root,root) %{_libexecdir}/qtcreator/qbs_processlauncher
-%attr(755,root,root) %{_libexecdir}/qtcreator/qml2puppet
+%attr(755,root,root) %{_libexecdir}/qtcreator/qml2puppet-%{version}
 %attr(755,root,root) %{_libexecdir}/qtcreator/qtcreator_process_stub
 %attr(755,root,root) %{_libexecdir}/qtcreator/qtc-askpass
 %attr(755,root,root) %{_libexecdir}/qtcreator/qtpromaker
@@ -133,7 +134,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/qtcreator
 %attr(755,root,root) %{_libdir}/qtcreator/lib*.so.*.*
 %attr(755,root,root) %{_libdir}/qtcreator/lib*.so
-%attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.8
+%attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.10
 %dir %{_libdir}/qtcreator/plugins
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/lib*.so
 %dir %{_libdir}/qtcreator/plugins/qbs
