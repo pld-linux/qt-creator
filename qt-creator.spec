@@ -1,5 +1,6 @@
 #
 # Conditional build:
+%bcond_with	qbs		# package Qbs build tool
 %bcond_without	webengine	# QtWebEngine based help viewer
 
 %ifnarch %{x8664} aarch64
@@ -76,7 +77,7 @@ sed -i '1s|^#!.*python\b|#!%{__python}|' src/shared/qbs/src/3rdparty/python/bin/
 
 %build
 %cmake -B build \
-	-DBUILD_QBS:BOOL=ON \
+	%{cmake_on_off qbs BUILD_QBS} \
 	%{cmake_on_off webengine BUILD_HELPVIEWERBACKEND_QTWEBENGINE}
 
 %{__make} -C build
@@ -109,6 +110,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%if %{with qbs}
 %attr(755,root,root) %{_bindir}/qbs
 %attr(755,root,root) %{_bindir}/qbs-config
 %attr(755,root,root) %{_bindir}/qbs-config-ui
@@ -116,16 +118,17 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/qbs-setup-android
 %attr(755,root,root) %{_bindir}/qbs-setup-qt
 %attr(755,root,root) %{_bindir}/qbs-setup-toolchains
+%endif
 %attr(755,root,root) %{_bindir}/qtcreator
 %{_sysconfdir}/ld.so.conf.d/qtcreator.conf
 %dir %{_libexecdir}/qtcreator
 %attr(755,root,root) %{_libexecdir}/qtcreator/buildoutputparser
 %attr(755,root,root) %{_libexecdir}/qtcreator/cpaster
-%attr(755,root,root) %{_libexecdir}/qtcreator/dmgbuild
+%{?with_qbs:%attr(755,root,root) %{_libexecdir}/qtcreator/dmgbuild}
 %attr(755,root,root) %{_libexecdir}/qtcreator/perf2text
 %attr(755,root,root) %{_libexecdir}/qtcreator/perfparser
 %attr(755,root,root) %{_libexecdir}/qtcreator/qtcreator_processlauncher
-%attr(755,root,root) %{_libexecdir}/qtcreator/qbs_processlauncher
+%{?with_qbs:%attr(755,root,root) %{_libexecdir}/qtcreator/qbs_processlauncher}
 %attr(755,root,root) %{_libexecdir}/qtcreator/qml2puppet-%{version}
 %attr(755,root,root) %{_libexecdir}/qtcreator/qtcreator_process_stub
 %attr(755,root,root) %{_libexecdir}/qtcreator/qtc-askpass
@@ -133,10 +136,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libexecdir}/qtcreator/sdktool
 %dir %{_libdir}/qtcreator
 %attr(755,root,root) %{_libdir}/qtcreator/lib*.so.*.*
-%attr(755,root,root) %{_libdir}/qtcreator/lib*.so
 %attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.10
 %dir %{_libdir}/qtcreator/plugins
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/lib*.so
+%if %{with qbs}
 %dir %{_libdir}/qtcreator/plugins/qbs
 %dir %{_libdir}/qtcreator/plugins/qbs/plugins
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qbs/plugins/libclangcompilationdbgenerator.so
@@ -146,6 +149,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qbs/plugins/libqbs_cpp_scanner.so
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qbs/plugins/libqbs_qt_scanner.so
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qbs/plugins/libvisualstudiogenerator.so
+%endif
 %dir %{_libdir}/qtcreator/plugins/qmldesigner
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qmldesigner/libStudioPlugin.so
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qmldesigner/libassetexporterplugin.so
