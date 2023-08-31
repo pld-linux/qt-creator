@@ -7,20 +7,20 @@
 %undefine	with_webengine
 %endif
 
-%define		qtver	6
+%define		qtver	6.2.0
 
 Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb programistów Qt
 Name:		qt-creator
-Version:	10.0.0
-Release:	3
+Version:	11.0.2
+Release:	1
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
-Source0:	https://download.qt.io/official_releases/qtcreator/10.0/%{version}/%{name}-opensource-src-%{version}.tar.xz
-# Source0-md5:	fceb0dc8bacc759d5291574be1190c2f
-Patch0:		build.patch
-URL:		https://doc.qt.io/qt-5/topics-app-development.html
+Source0:	https://download.qt.io/official_releases/qtcreator/11.0/%{version}/%{name}-opensource-src-%{version}.tar.xz
+# Source0-md5:	3fbaa230c6a92308190e807f7d5e0119
+Patch0:		%{name}-yaml-cpp.patch
+URL:		https://doc.qt.io/qtcreator/
 BuildRequires:	Qt6Concurrent-devel >= %{qtver}
 BuildRequires:	Qt6Designer-devel >= %{qtver}
 BuildRequires:	Qt6Gui-devel >= %{qtver}
@@ -41,7 +41,7 @@ BuildRequires:	Qt6Xml-devel >= %{qtver}
 BuildRequires:	clang-devel >= 6.0.0
 BuildRequires:	cmake >= 3.16
 BuildRequires:	gdb
-BuildRequires:	libstdc++-devel
+BuildRequires:	libstdc++-devel >= 6:7
 BuildRequires:	llvm-devel >= 7.0.0
 BuildRequires:	qt6-build >= %{qtver}
 BuildRequires:	qt6-linguist
@@ -49,6 +49,7 @@ BuildRequires:	qt6-shadertools
 BuildRequires:	rpmbuild(macros) >= 1.742
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
+BuildRequires:	yaml-cpp-devel >= 0.8
 Requires(post,postun):	desktop-file-utils
 %requires_eq	Qt6Core
 Requires:	Qt6Gui-platform-xcb
@@ -73,7 +74,7 @@ Qt.
 %setup -q -n %{name}-opensource-src-%{version}
 %patch0 -p1
 
-sed -i '1s|^#!.*python\b|#!%{__python}|' src/shared/qbs/src/3rdparty/python/bin/dmgbuild
+sed -i '1s,/usr/bin/env python,%{__python},' src/shared/qbs/src/3rdparty/python/lib/python3.9/site-packages/dmgbuild/__main__.py
 
 %build
 %cmake -B build \
@@ -136,7 +137,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libexecdir}/qtcreator/sdktool
 %dir %{_libdir}/qtcreator
 %attr(755,root,root) %{_libdir}/qtcreator/lib*.so.*.*
-%attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.10
+%attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.11
 %dir %{_libdir}/qtcreator/plugins
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/lib*.so
 %if %{with qbs}
