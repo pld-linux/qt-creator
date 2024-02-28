@@ -13,7 +13,7 @@ Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb programistów Qt
 Name:		qt-creator
 Version:	11.0.2
-Release:	5
+Release:	6
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
