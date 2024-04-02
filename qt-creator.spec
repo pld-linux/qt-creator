@@ -7,19 +7,18 @@
 %undefine	with_webengine
 %endif
 
-%define		qtver	6.2.0
+%define		qtver	6.4.3
 
 Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb programistów Qt
 Name:		qt-creator
-Version:	11.0.2
-Release:	6
+Version:	12.0.2
+Release:	1
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
-Source0:	https://download.qt.io/official_releases/qtcreator/11.0/%{version}/%{name}-opensource-src-%{version}.tar.xz
-# Source0-md5:	3fbaa230c6a92308190e807f7d5e0119
-Patch0:		%{name}-yaml-cpp.patch
+Source0:	https://download.qt.io/official_releases/qtcreator/12.0/%{version}/%{name}-opensource-src-%{version}.tar.xz
+# Source0-md5:	110a36302e3ca0c2fd00cee7c9764571
 URL:		https://doc.qt.io/qtcreator/
 BuildRequires:	Qt6Concurrent-devel >= %{qtver}
 BuildRequires:	Qt6Designer-devel >= %{qtver}
@@ -72,7 +71,6 @@ Qt.
 
 %prep
 %setup -q -n %{name}-opensource-src-%{version}
-%patch0 -p1
 
 sed -i '1s,/usr/bin/env python,%{__python},' src/shared/qbs/src/3rdparty/python/lib/python3.9/site-packages/dmgbuild/__main__.py
 
@@ -137,7 +135,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libexecdir}/qtcreator/sdktool
 %dir %{_libdir}/qtcreator
 %attr(755,root,root) %{_libdir}/qtcreator/lib*.so.*.*
-%attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.11
+%attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.12
 %dir %{_libdir}/qtcreator/plugins
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/lib*.so
 %if %{with qbs}
@@ -152,7 +150,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qbs/plugins/libvisualstudiogenerator.so
 %endif
 %dir %{_libdir}/qtcreator/plugins/qmldesigner
-%attr(755,root,root) %{_libdir}/qtcreator/plugins/qmldesigner/libStudioPlugin.so
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qmldesigner/libassetexporterplugin.so
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qmldesigner/libcomponentsplugin.so
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qmldesigner/libqmlpreviewplugin.so
