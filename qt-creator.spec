@@ -12,13 +12,13 @@
 Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb programistów Qt
 Name:		qt-creator
-Version:	12.0.2
+Version:	13.0.1
 Release:	1
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
-Source0:	https://download.qt.io/official_releases/qtcreator/12.0/%{version}/%{name}-opensource-src-%{version}.tar.xz
-# Source0-md5:	110a36302e3ca0c2fd00cee7c9764571
+Source0:	https://download.qt.io/official_releases/qtcreator/13.0/%{version}/%{name}-opensource-src-%{version}.tar.xz
+# Source0-md5:	4e7cb5c7c0287b9c3c838b8c436a35b8
 URL:		https://doc.qt.io/qtcreator/
 BuildRequires:	Qt6Concurrent-devel >= %{qtver}
 BuildRequires:	Qt6Designer-devel >= %{qtver}
@@ -135,7 +135,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libexecdir}/qtcreator/sdktool
 %dir %{_libdir}/qtcreator
 %attr(755,root,root) %{_libdir}/qtcreator/lib*.so.*.*
-%attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.12
+%attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.13
 %dir %{_libdir}/qtcreator/plugins
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/lib*.so
 %if %{with qbs}
