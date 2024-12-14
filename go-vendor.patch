@@ -1,0 +1,11 @@
+--- qt-creator-opensource-src-15.0.0/src/libs/gocmdbridge/server/CMakeLists.txt.orig	2024-11-27 11:00:23.000000000 +0100
++++ qt-creator-opensource-src-15.0.0/src/libs/gocmdbridge/server/CMakeLists.txt	2024-12-14 15:50:21.597791166 +0100
+@@ -11,7 +11,7 @@
+             if ((${PLATFORM} STREQUAL "linux" OR (${PLATFORM} STREQUAL "windows" AND ${ARCHITECTURE} STREQUAL "amd64")) AND NOT UPX_BIN STREQUAL "UPX_BIN-NOTFOUND")
+                 add_custom_command(
+                     OUTPUT "${OUTPUT}"
+-                    COMMAND ${CMAKE_COMMAND} -E env GOARCH=${ARCHITECTURE} GOOS=${PLATFORM} ${GO_BIN} build -ldflags "-s -w ${LDFLAGS}" -o ${OUTPUT}
++                    COMMAND ${CMAKE_COMMAND} -E env GOARCH=${ARCHITECTURE} GOOS=${PLATFORM} ${GO_BIN} build -mod=veendor -ldflags "-s -w ${LDFLAGS}" -o ${OUTPUT}
+                     COMMAND ${UPX_BIN} -9 ${OUTPUT}
+                     DEPENDS ${SOURCES}
+                     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}

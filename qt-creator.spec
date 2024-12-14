@@ -12,13 +12,20 @@
 Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb programistów Qt
 Name:		qt-creator
-Version:	13.0.1
-Release:	4
+Version:	15.0.0
+Release:	1
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
-Source0:	https://download.qt.io/official_releases/qtcreator/13.0/%{version}/%{name}-opensource-src-%{version}.tar.xz
-# Source0-md5:	4e7cb5c7c0287b9c3c838b8c436a35b8
+Source0:	https://download.qt.io/official_releases/qtcreator/15.0/%{version}/%{name}-opensource-src-%{version}.tar.xz
+# Source0-md5:	01c2e452721f81d070081eb2f8416ad0
+# cd src/libs/gocmdbridge/server
+# go mod vendor
+# cd ../../../..
+# tar acf go-vendor.tar.xz src/libs/gocmdbridge/server/vendor
+Source1:	go-vendor.tar.xz
+# Source1-md5:	be8524f78f4bff8f151db634c1d7e23d
+Patch0:		go-vendor.patch
 URL:		https://doc.qt.io/qtcreator/
 BuildRequires:	Qt6Concurrent-devel >= %{qtver}
 BuildRequires:	Qt6Designer-devel >= %{qtver}
@@ -38,15 +45,17 @@ BuildRequires:	Qt6UiTools-devel >= %{qtver}
 BuildRequires:	Qt6Widgets-devel >= %{qtver}
 BuildRequires:	Qt6Xml-devel >= %{qtver}
 BuildRequires:	clang-devel >= 6.0.0
-BuildRequires:	cmake >= 3.16
+BuildRequires:	cmake >= 3.20
 BuildRequires:	gdb
-BuildRequires:	libstdc++-devel >= 6:7
+BuildRequires:	golang >= 1.21.7
+BuildRequires:	libstdc++-devel >= 6:8
 BuildRequires:	llvm-devel >= 7.0.0
 BuildRequires:	qt6-build >= %{qtver}
 BuildRequires:	qt6-linguist
 BuildRequires:	qt6-shadertools
-BuildRequires:	rpmbuild(macros) >= 1.742
+BuildRequires:	rpmbuild(macros) >= 2.009
 BuildRequires:	tar >= 1:1.22
+BuildRequires:	upx >= 3.94
 BuildRequires:	xz
 BuildRequires:	yaml-cpp-devel >= 0.8
 Requires(post,postun):	desktop-file-utils
@@ -57,9 +66,11 @@ Requires:	hicolor-icon-theme
 Requires:	qt5-qtdeclarative
 # for xdg-open
 Suggests:	xdg-utils
+ExclusiveArch:	%go_arches
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		skip_post_check_so	'libClangsupport\.so.*'
+%define		_noautostrip		.*cmdbridge.*
 
 %description
 Qt Creator is a cross-platform integrated development environment
@@ -71,6 +82,7 @@ Qt.
 
 %prep
 %setup -q -n %{name}-opensource-src-%{version}
+%patch -P 0 -p1
 
 sed -i '1s,/usr/bin/env python,%{__python},' src/shared/qbs/src/3rdparty/python/lib/python3.9/site-packages/dmgbuild/__main__.py
 
@@ -122,6 +134,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/ld.so.conf.d/qtcreator.conf
 %dir %{_libexecdir}/qtcreator
 %attr(755,root,root) %{_libexecdir}/qtcreator/buildoutputparser
+%attr(755,root,root) %{_libexecdir}/qtcreator/cmdbridge-*
 %attr(755,root,root) %{_libexecdir}/qtcreator/cpaster
 %{?with_qbs:%attr(755,root,root) %{_libexecdir}/qtcreator/dmgbuild}
 %attr(755,root,root) %{_libexecdir}/qtcreator/perf2text
@@ -135,7 +148,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libexecdir}/qtcreator/sdktool
 %dir %{_libdir}/qtcreator
 %attr(755,root,root) %{_libdir}/qtcreator/lib*.so.*.*
-%attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.13
+%attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.15
 %dir %{_libdir}/qtcreator/plugins
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/lib*.so
 %if %{with qbs}
