@@ -81,7 +81,7 @@ Qt Creator to wieloplatformowe IDE dostosowane do potrzeb programistów
 Qt.
 
 %prep
-%setup -q -n %{name}-opensource-src-%{version}
+%setup -q -n %{name}-opensource-src-%{version} -a1
 %patch -P 0 -p1
 
 sed -i '1s,/usr/bin/env python,%{__python},' src/shared/qbs/src/3rdparty/python/lib/python3.9/site-packages/dmgbuild/__main__.py
