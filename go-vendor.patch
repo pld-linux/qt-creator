@@ -5,7 +5,7 @@
                  add_custom_command(
                      OUTPUT "${OUTPUT}"
 -                    COMMAND ${CMAKE_COMMAND} -E env GOARCH=${ARCHITECTURE} GOOS=${PLATFORM} ${GO_BIN} build -ldflags "-s -w ${LDFLAGS}" -o ${OUTPUT}
-+                    COMMAND ${CMAKE_COMMAND} -E env GOARCH=${ARCHITECTURE} GOOS=${PLATFORM} ${GO_BIN} build -mod=veendor -ldflags "-s -w ${LDFLAGS}" -o ${OUTPUT}
++                    COMMAND ${CMAKE_COMMAND} -E env GOARCH=${ARCHITECTURE} GOOS=${PLATFORM} ${GO_BIN} build -mod=vendor -ldflags "-s -w ${LDFLAGS}" -o ${OUTPUT}
                      COMMAND ${UPX_BIN} -9 ${OUTPUT}
                      DEPENDS ${SOURCES}
                      WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
