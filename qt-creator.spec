@@ -12,19 +12,19 @@
 Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb programistów Qt
 Name:		qt-creator
-Version:	15.0.0
-Release:	4
+Version:	16.0.1
+Release:	1
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
-Source0:	https://download.qt.io/official_releases/qtcreator/15.0/%{version}/%{name}-opensource-src-%{version}.tar.xz
-# Source0-md5:	01c2e452721f81d070081eb2f8416ad0
+Source0:	https://download.qt.io/official_releases/qtcreator/16.0/%{version}/%{name}-opensource-src-%{version}.tar.xz
+# Source0-md5:	7bbbc896a587a52e60eed18795bb1e8e
 # cd src/libs/gocmdbridge/server
 # go mod vendor
 # cd ../../../..
 # tar acf go-vendor.tar.xz src/libs/gocmdbridge/server/vendor
 Source1:	go-vendor.tar.xz
-# Source1-md5:	be8524f78f4bff8f151db634c1d7e23d
+# Source1-md5:	7db38a9b591667366e0423ecff25317d
 Patch0:		go-vendor.patch
 URL:		https://doc.qt.io/qtcreator/
 BuildRequires:	Qt6Concurrent-devel >= %{qtver}
