@@ -139,16 +139,15 @@ rm -rf $RPM_BUILD_ROOT
 %{?with_qbs:%attr(755,root,root) %{_libexecdir}/qtcreator/dmgbuild}
 %attr(755,root,root) %{_libexecdir}/qtcreator/perf2text
 %attr(755,root,root) %{_libexecdir}/qtcreator/perfparser
-%attr(755,root,root) %{_libexecdir}/qtcreator/qtcreator_processlauncher
 %{?with_qbs:%attr(755,root,root) %{_libexecdir}/qtcreator/qbs_processlauncher}
-%attr(755,root,root) %{_libexecdir}/qtcreator/qml2puppet-%{version}
+%attr(755,root,root) %{_libexecdir}/qtcreator/qmlpuppet-%{version}
 %attr(755,root,root) %{_libexecdir}/qtcreator/qtcreator_process_stub
 %attr(755,root,root) %{_libexecdir}/qtcreator/qtc-askpass
 %attr(755,root,root) %{_libexecdir}/qtcreator/qtpromaker
 %attr(755,root,root) %{_libexecdir}/qtcreator/sdktool
 %dir %{_libdir}/qtcreator
 %attr(755,root,root) %{_libdir}/qtcreator/lib*.so.*.*
-%attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.15
+%attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.16
 %dir %{_libdir}/qtcreator/plugins
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/lib*.so
 %if %{with qbs}
