@@ -12,19 +12,19 @@
 Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb programistów Qt
 Name:		qt-creator
-Version:	16.0.1
-Release:	2
+Version:	17.0.1
+Release:	1
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
-Source0:	https://download.qt.io/official_releases/qtcreator/16.0/%{version}/%{name}-opensource-src-%{version}.tar.xz
-# Source0-md5:	7bbbc896a587a52e60eed18795bb1e8e
+Source0:	https://download.qt.io/official_releases/qtcreator/17.0/%{version}/%{name}-opensource-src-%{version}.tar.xz
+# Source0-md5:	15b59d584eb9df246df3f4870ef80af8
 # cd src/libs/gocmdbridge/server
 # go mod vendor
 # cd ../../../..
 # tar acf go-vendor.tar.xz src/libs/gocmdbridge/server/vendor
 Source1:	go-vendor.tar.xz
-# Source1-md5:	7db38a9b591667366e0423ecff25317d
+# Source1-md5:	be8524f78f4bff8f151db634c1d7e23d
 Patch0:		go-vendor.patch
 URL:		https://doc.qt.io/qtcreator/
 BuildRequires:	Qt6Concurrent-devel >= %{qtver}
@@ -147,7 +147,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libexecdir}/qtcreator/sdktool
 %dir %{_libdir}/qtcreator
 %attr(755,root,root) %{_libdir}/qtcreator/lib*.so.*.*
-%attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.16
+%attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.17
 %dir %{_libdir}/qtcreator/plugins
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/lib*.so
 %if %{with qbs}
@@ -162,7 +162,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qbs/plugins/libvisualstudiogenerator.so
 %endif
 %dir %{_libdir}/qtcreator/plugins/qmldesigner
-%attr(755,root,root) %{_libdir}/qtcreator/plugins/qmldesigner/libassetexporterplugin.so
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qmldesigner/libcomponentsplugin.so
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qmldesigner/libqmlpreviewplugin.so
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/qmldesigner/libqtquickplugin.so
