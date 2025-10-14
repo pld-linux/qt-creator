@@ -12,13 +12,13 @@
 Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb programistów Qt
 Name:		qt-creator
-Version:	17.0.1
-Release:	2
+Version:	17.0.2
+Release:	1
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
 Source0:	https://download.qt.io/official_releases/qtcreator/17.0/%{version}/%{name}-opensource-src-%{version}.tar.xz
-# Source0-md5:	15b59d584eb9df246df3f4870ef80af8
+# Source0-md5:	e29dc6070ea5b8785a753fdd3dd745d7
 # cd src/libs/gocmdbridge/server
 # go mod vendor
 # cd ../../../..
