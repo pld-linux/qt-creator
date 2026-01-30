@@ -12,20 +12,19 @@
 Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb programistów Qt
 Name:		qt-creator
-Version:	17.0.2
-Release:	2
+Version:	18.0.2
+Release:	1
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
-Source0:	https://download.qt.io/official_releases/qtcreator/17.0/%{version}/%{name}-opensource-src-%{version}.tar.xz
-# Source0-md5:	e29dc6070ea5b8785a753fdd3dd745d7
+Source0:	https://download.qt.io/official_releases/qtcreator/18.0/%{version}/%{name}-opensource-src-%{version}.tar.xz
+# Source0-md5:	5267b8b11fdcd2da68374211be39bb34
 # cd src/libs/gocmdbridge/server
 # go mod vendor
 # cd ../../../..
 # tar acf go-vendor.tar.xz src/libs/gocmdbridge/server/vendor
 Source1:	go-vendor.tar.xz
 # Source1-md5:	be8524f78f4bff8f151db634c1d7e23d
-Patch0:		go-vendor.patch
 URL:		https://doc.qt.io/qtcreator/
 BuildRequires:	Qt6Concurrent-devel >= %{qtver}
 BuildRequires:	Qt6Designer-devel >= %{qtver}
@@ -82,14 +81,14 @@ Qt.
 
 %prep
 %setup -q -n %{name}-opensource-src-%{version} -a1
-%patch -P 0 -p1
 
 sed -i '1s,/usr/bin/env python,%{__python},' src/shared/qbs/src/3rdparty/python/lib/python3.9/site-packages/dmgbuild/__main__.py
 
 %build
 %cmake -B build \
 	%{cmake_on_off qbs BUILD_QBS} \
-	%{cmake_on_off webengine BUILD_HELPVIEWERBACKEND_QTWEBENGINE}
+	%{cmake_on_off webengine BUILD_HELPVIEWERBACKEND_QTWEBENGINE} \
+	-DCMDBRIDGE_BUILD_VENDOR_MODE=ON
 
 %{__make} -C build
 
@@ -147,7 +146,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libexecdir}/qtcreator/sdktool
 %dir %{_libdir}/qtcreator
 %attr(755,root,root) %{_libdir}/qtcreator/lib*.so.*.*
-%attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.17
+%attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.18
 %dir %{_libdir}/qtcreator/plugins
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/lib*.so
 %if %{with qbs}
