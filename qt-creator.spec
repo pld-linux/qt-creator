@@ -13,7 +13,7 @@ Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb programistów Qt
 Name:		qt-creator
 Version:	18.0.2
-Release:	5
+Release:	6
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
@@ -46,7 +46,9 @@ BuildRequires:	Qt6Xml-devel >= %{qtver}
 BuildRequires:	clang-devel >= 6.0.0
 BuildRequires:	cmake >= 3.20
 BuildRequires:	gdb
+%ifarch %go_arches
 BuildRequires:	golang >= 1.21.7
+%endif
 BuildRequires:	libstdc++-devel >= 6:8
 BuildRequires:	llvm-devel >= 7.0.0
 BuildRequires:	qt6-build >= %{qtver}
@@ -65,7 +67,6 @@ Requires:	hicolor-icon-theme
 Requires:	qt5-qtdeclarative
 # for xdg-open
 Suggests:	xdg-utils
-ExclusiveArch:	%go_arches
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		skip_post_check_so	'libClangsupport\.so.*'
@@ -88,6 +89,9 @@ sed -i '1s,/usr/bin/env python,%{__python},' src/shared/qbs/src/3rdparty/python/
 %cmake -B build \
 	%{cmake_on_off qbs BUILD_QBS} \
 	%{cmake_on_off webengine BUILD_HELPVIEWERBACKEND_QTWEBENGINE} \
+%ifnarch %go_arches
+	-DBUILD_EXECUTABLE_CMDBRIDGE=OFF \
+%endif
 	-DCMDBRIDGE_BUILD_VENDOR_MODE=ON
 
 %{__make} -C build
@@ -133,7 +137,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/ld.so.conf.d/qtcreator.conf
 %dir %{_libexecdir}/qtcreator
 %attr(755,root,root) %{_libexecdir}/qtcreator/buildoutputparser
+%ifarch %go_arches
 %attr(755,root,root) %{_libexecdir}/qtcreator/cmdbridge-*
+%endif
 %attr(755,root,root) %{_libexecdir}/qtcreator/cpaster
 %{?with_qbs:%attr(755,root,root) %{_libexecdir}/qtcreator/dmgbuild}
 %attr(755,root,root) %{_libexecdir}/qtcreator/perf2text
