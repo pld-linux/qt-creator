@@ -12,13 +12,13 @@
 Summary:	An IDE tailored to the needs of Qt developers
 Summary(pl.UTF-8):	IDE dostosowane do potrzeb programistów Qt
 Name:		qt-creator
-Version:	18.0.2
-Release:	6
+Version:	20.0.1
+Release:	1
 Epoch:		1
 License:	LGPL v2.1
 Group:		X11/Development/Tools
-Source0:	https://download.qt.io/official_releases/qtcreator/18.0/%{version}/%{name}-opensource-src-%{version}.tar.xz
-# Source0-md5:	5267b8b11fdcd2da68374211be39bb34
+Source0:	https://download.qt.io/official_releases/qtcreator/20.0/%{version}/%{name}-opensource-src-%{version}.tar.xz
+# Source0-md5:	1222a9ac678341b97a05b12122e2c527
 # cd src/libs/gocmdbridge/server
 # go mod vendor
 # cd ../../../..
@@ -39,6 +39,7 @@ BuildRequires:	Qt6SerialPort-devel >= %{qtver}
 BuildRequires:	Qt6ShaderTools-devel >= %{qtver}
 BuildRequires:	Qt6Sql-devel >= %{qtver}
 BuildRequires:	Qt6Svg-devel >= %{qtver}
+BuildRequires:	Qt6TaskTree-devel >= %{qtver}
 BuildRequires:	Qt6UiTools-devel >= %{qtver}
 %{?with_webengine:BuildRequires:	Qt6WebEngine-devel >= %{qtver}}
 BuildRequires:	Qt6Widgets-devel >= %{qtver}
@@ -141,18 +142,20 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libexecdir}/qtcreator/cmdbridge-*
 %endif
 %attr(755,root,root) %{_libexecdir}/qtcreator/cpaster
+%attr(755,root,root) %{_libexecdir}/qtcreator/dlwrapper
 %{?with_qbs:%attr(755,root,root) %{_libexecdir}/qtcreator/dmgbuild}
 %attr(755,root,root) %{_libexecdir}/qtcreator/perf2text
 %attr(755,root,root) %{_libexecdir}/qtcreator/perfparser
 %{?with_qbs:%attr(755,root,root) %{_libexecdir}/qtcreator/qbs_processlauncher}
 %attr(755,root,root) %{_libexecdir}/qtcreator/qmlpuppet-%{version}
+%attr(755,root,root) %{_libexecdir}/qtcreator/qmltraceviewer
 %attr(755,root,root) %{_libexecdir}/qtcreator/qtcreator_process_stub
 %attr(755,root,root) %{_libexecdir}/qtcreator/qtc-askpass
 %attr(755,root,root) %{_libexecdir}/qtcreator/qtpromaker
 %attr(755,root,root) %{_libexecdir}/qtcreator/sdktool
 %dir %{_libdir}/qtcreator
 %attr(755,root,root) %{_libdir}/qtcreator/lib*.so.*.*
-%attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.18
+%attr(755,root,root) %ghost %{_libdir}/qtcreator/lib*.so.20
 %dir %{_libdir}/qtcreator/plugins
 %attr(755,root,root) %{_libdir}/qtcreator/plugins/lib*.so
 %if %{with qbs}
