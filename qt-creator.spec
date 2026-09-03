@@ -25,6 +25,7 @@ Source0:	https://download.qt.io/official_releases/qtcreator/20.0/%{version}/%{na
 # tar acf go-vendor.tar.xz src/libs/gocmdbridge/server/vendor
 Source1:	go-vendor.tar.xz
 # Source1-md5:	be8524f78f4bff8f151db634c1d7e23d
+Patch0:		int128.patch
 URL:		https://doc.qt.io/qtcreator/
 BuildRequires:	Qt6Concurrent-devel >= %{qtver}
 BuildRequires:	Qt6Designer-devel >= %{qtver}
@@ -84,6 +85,7 @@ Qt.
 
 %prep
 %setup -q -n %{name}-opensource-src-%{version} -a1
+%patch -P0 -p1
 
 sed -i '1s,/usr/bin/env python,%{__python},' src/shared/qbs/src/3rdparty/python/lib/python3.9/site-packages/dmgbuild/__main__.py
 

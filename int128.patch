@@ -1,0 +1,60 @@
+--- qt-creator-opensource-src-20.0.1/src/libs/sqlite/sqlitebasestatement.cpp.orig	2026-07-28 01:35:35.000000000 +0000
++++ qt-creator-opensource-src-20.0.1/src/libs/sqlite/sqlitebasestatement.cpp	2026-09-02 21:23:39.623333067 +0000
+@@ -163,7 +163,7 @@
+         Sqlite::throwError(resultCode, sqliteDatabaseHandle(sourceLocation), sourceLocation);
+ }
+ 
+-#ifdef Q_OS_UNIX
++#if defined(Q_OS_UNIX) && defined(__SIZEOF_INT128__)
+ void BaseStatement::bind(int index, __int128_t value, const source_location &sourceLocation)
+ {
+     NanotraceHR::Tracer tracer{"bind int128",
+@@ -560,7 +560,7 @@
+     return value;
+ }
+ 
+-#ifdef Q_OS_UNIX
++#if defined(Q_OS_UNIX) && defined(__SIZEOF_INT128__)
+ __int128_t BaseStatement::fetchInt128Value(int column) const
+ {
+     NanotraceHR::Tracer tracer{"fetch int 128",
+@@ -586,7 +586,7 @@
+     return fetchLongLongValue(column);
+ }
+ 
+-#ifdef Q_OS_UNIX
++#if defined(Q_OS_UNIX) && defined(__SIZEOF_INT128__)
+ template<>
+ __int128_t BaseStatement::fetchValue<__int128_t>(int column) const
+ {
+--- qt-creator-opensource-src-20.0.1/src/libs/sqlite/sqlitebasestatement.h.orig	2026-07-28 01:35:35.000000000 +0000
++++ qt-creator-opensource-src-20.0.1/src/libs/sqlite/sqlitebasestatement.h	2026-09-02 21:23:54.716666390 +0000
+@@ -59,7 +59,7 @@
+     int fetchIntValue(int column) const;
+     long fetchLongValue(int column) const;
+     long long fetchLongLongValue(int column) const;
+-#ifdef Q_OS_UNIX
++#if defined(Q_OS_UNIX) && defined(__SIZEOF_INT128__)
+     __int128_t fetchInt128Value(int column) const;
+ #endif
+ 
+@@ -74,7 +74,7 @@
+     void bind(int index, NullValue, const source_location &sourceLocation);
+     void bind(int index, int value, const source_location &sourceLocation);
+     void bind(int index, long long value, const source_location &sourceLocation);
+-#ifdef Q_OS_UNIX
++#if defined(Q_OS_UNIX) && defined(__SIZEOF_INT128__)
+     void bind(int index, __int128_t value, const source_location &sourceLocation);
+ #endif
+ 
+--- qt-creator-opensource-src-20.0.1/tests/unit/tests/unittests/sqlite/sqlitestatement-test.cpp.orig	2026-07-28 01:35:34.000000000 +0000
++++ qt-creator-opensource-src-20.0.1/tests/unit/tests/unittests/sqlite/sqlitestatement-test.cpp	2026-09-02 21:24:05.166666382 +0000
+@@ -377,7 +377,7 @@
+     ASSERT_THAT(statement.fetchSmallStringViewValue(0), "poo");
+ }
+ 
+-#ifdef Q_OS_LINUX
++#if defined(Q_OS_LINUX) && defined(__SIZEOF_INT128__)
+ TEST_F(SqliteStatement, bind_int128)
+ {
+     SqliteTestStatement<1, 1> statement("WITH T(blob) AS (VALUES (?)) SELECT blob FROM T", database);
