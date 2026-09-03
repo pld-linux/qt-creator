@@ -46,6 +46,7 @@ BuildRequires:	Qt6Widgets-devel >= %{qtver}
 BuildRequires:	Qt6Xml-devel >= %{qtver}
 BuildRequires:	clang-devel >= 6.0.0
 BuildRequires:	cmake >= 3.20
+BuildRequires:	elfutils-devel
 BuildRequires:	gdb
 %ifarch %go_arches
 BuildRequires:	golang >= 1.21.7
